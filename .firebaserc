@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "react-redux-app-c02e6",
+    "firebase-react-deploy": "react-redux-app-c02e6"
+  }
+}
