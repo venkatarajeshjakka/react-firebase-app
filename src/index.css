@@ -1,6 +1,10 @@
 html{
   min-height: 100%;
 }
+
+nav .brand-logo {
+  margin-left: 0px;
+}
 body {
   margin: 0;
   padding: 0;
