@@ -1,6 +1,10 @@
 html{
   min-height: 100%;
 }
+
+nav .brand-logo {
+  margin-left: 0px;
+}
 body {
   margin: 0;
   padding: 0;
@@ -31,4 +35,13 @@ textarea.materialize-textarea:focus:not([readonly])
 {
   border-color: #ec407a;
   box-shadow: none;
+}
+
+.icon-close
+{
+  position: absolute;
+  top: 0;
+  right: 0px;
+  font-size: 30px;
+  margin-left: 0px;
 }
