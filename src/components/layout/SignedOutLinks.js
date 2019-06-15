@@ -6,10 +6,6 @@ import "materialize-css/dist/css/materialize.min.css";
 
 class SignedOutLinks extends Component
 {
-    state = { 
-        hideNav: false
-     };
-
     componentDidMount()
     {
         var elem = document.querySelector('.sidenav');
@@ -17,11 +13,6 @@ class SignedOutLinks extends Component
             edge: "left"
             
         });
-    }
-
-    closeSideNav =(e) =>
-    {
-        this.setState({hideNav: true}); 
     }
     render()
     {
@@ -38,19 +29,19 @@ class SignedOutLinks extends Component
             </ul>
             
             <ul id="slide-out" className="sidenav">
-            <li>
+                 <li><a class="sidenav-close" href="#!"><i className="material-icons icon-close">close</i></a></li>
+              <li>
                 <div className="user-view">
     
                 </div>
-    
             </li>
-            <li>
-                    <NavLink to='/signup' >SignUp</NavLink>
+                <li>
+                    <NavLink to='/signup' className="sidenav-close">SignUp</NavLink>
                     </li>
                     <li>
-                    <NavLink to='/signin' >Log In</NavLink>
+                    <NavLink to='/signin' className="sidenav-close">Log In</NavLink>
                     </li>
-            </ul>
+                </ul>
             <a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a>
             </div>
         )
