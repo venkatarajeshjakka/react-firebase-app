@@ -29,7 +29,7 @@ class SignedOutLinks extends Component
             </ul>
             
             <ul id="slide-out" className="sidenav">
-                 <li><a class="sidenav-close" href="#!"><i className="material-icons icon-close">close</i></a></li>
+                 <li><a className="sidenav-close" href="#!"><i className="material-icons icon-close">close</i></a></li>
               <li>
                 <div className="user-view">
     
