@@ -47,7 +47,7 @@ textarea.materialize-textarea:focus:not([readonly])
 }
 /*added for autocomplete */
 .menu {
-  position: absolute;
+  position: relative;
   box-sizing: border-box;
   width: 100%;
   border: 1px solid #cccccc;

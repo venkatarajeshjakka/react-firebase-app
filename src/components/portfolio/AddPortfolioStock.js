@@ -44,11 +44,10 @@ import moment from "moment";
           <div className="container">
           <form onSubmit={this.handleSubmit} className="white">
           <div className="input-field">
-            <span>Stock: </span>
-            <span>
+           
             <Autocomplete
                         value={ this.state.value }
-                        inputProps={{ id: 'stock' }}
+                        inputProps={{ id: 'stock' ,placeholder: 'Add Stock...' }}
                         wrapperStyle={{ position: 'relative', display: 'inline-block', padding: 10 }}
                         items={ getStocks() }
                         getItemValue={ item => item.name }
@@ -72,7 +71,7 @@ import moment from "moment";
                     </div>
                        )}
                     />
-            </span>
+           
                       
                     
                   </div>
