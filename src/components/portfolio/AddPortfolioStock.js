@@ -2,20 +2,49 @@ import React, { Component } from 'react'
 import Autocomplete from  'react-autocomplete';
 import { getStocks, matchStocks } from '../../data/stockData';
 import "materialize-css/dist/css/materialize.min.css";
-
+import M from "materialize-css/dist/js/materialize.min.js";
+import moment from "moment";
  class AddPortfolioStock extends Component {
     
-  
-    state = { value: ''
+  componentDidMount() {
+    var context = this;
+
+    var elems = document.querySelectorAll(".dateset");
+    M.Datepicker.init(elems, {
+      defaultDate: new Date(),
+      format: this.state.format,
+      container: "body",
+      onSelect: function(date) {
+        context.setState({ date: context.state.date });
+        console.log(date); // Selected date is logged
+      },
+      autoClose: true
+    });
+  }
+    state = { value: '', date: new Date(),
+    format: "ddd d, mmm",
+    formatMoment: "ddd D, MMM"
      };
     
+     handleChange =(e) =>
+     {
+         this.setState({
+             [e.target.id]: e.target.value
+         })
+     }
+ 
+     handleSubmit =(e) =>
+     {
+         e.preventDefault();
+         console.log(this.state);
+     }
     render() {
       
         return (
           <div className="container">
           <form onSubmit={this.handleSubmit} className="white">
           <div className="input-field">
-            <span>Add Stock: </span>
+            <span>Stock: </span>
             <span>
             <Autocomplete
                         value={ this.state.value }
@@ -47,7 +76,18 @@ import "materialize-css/dist/css/materialize.min.css";
                       
                     
                   </div>
-            </form>
+          <div className="input-field">
+          <i className="material-icons prefix">date_range</i>
+          <input id="date" type="text" className="datepicker dateset" defaultValue={moment(this.state.date).format(this.state.formatMoment )} />
+            </div>  
+
+            <div className="input-field">
+              <button className="btn pink lighten-1 z-depth-0">
+                  Add
+              </button>
+                       
+            </div>
+          </form>
            
          </div>
         
