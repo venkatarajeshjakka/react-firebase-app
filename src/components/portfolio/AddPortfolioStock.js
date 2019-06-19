@@ -23,7 +23,9 @@ import moment from "moment";
   }
     state = { value: '', date: new Date(),
     format: "ddd d, mmm",
-    formatMoment: "ddd D, MMM"
+    formatMoment: "ddd D, MMM",
+    quanity: '',
+    cost: ''
      };
     
      handleChange =(e) =>
@@ -42,7 +44,9 @@ import moment from "moment";
       
         return (
           <div className="container">
-          <form onSubmit={this.handleSubmit} className="white">
+            <h5 className="center-align">Add Stock</h5>
+            <div className="row">
+            <form onSubmit={this.handleSubmit} className="white">
           <div className="input-field">
            
             <Autocomplete
@@ -79,14 +83,23 @@ import moment from "moment";
           <i className="material-icons prefix">date_range</i>
           <input id="date" type="text" className="datepicker dateset" defaultValue={moment(this.state.date).format(this.state.formatMoment )} />
             </div>  
-
+          <div className="input-field">
+            <input type="text" id="quanity" onChange={this.handleChange}/>
+            <label htmlFor="quantity">Shares</label>
+          </div>
+          <div className="input-field">
+            <input type="text" id="cost" onChange={this.handleChange}/>
+            <label htmlFor="cost">Cost Basis</label>
+          </div>
             <div className="input-field">
-              <button className="btn pink lighten-1 z-depth-0">
-                  Add
+              <button className="btn pink lighten-1 z-depth-0 center">
+                  Done
               </button>
                        
             </div>
           </form>
+       </div>
+         
            
          </div>
         
