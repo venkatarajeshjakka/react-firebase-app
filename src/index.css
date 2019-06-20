@@ -19,14 +19,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-form {
-  padding:20px;
-  margin-top: 60px;
+
+.btn
+{
+  margin-right: 5%;
+  float: right;
 }
 
-form button , form h5{
-  margin : 20px 0;
-}
 
 input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=email]:not(.browser-default):focus:not([readonly]),
@@ -44,4 +43,27 @@ textarea.materialize-textarea:focus:not([readonly])
   right: 0px;
   font-size: 30px;
   margin-left: 0px;
+}
+/*added for autocomplete */
+.menu {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #cccccc;
+}
+
+.item {
+  padding: 2px 6px;
+  cursor: default;
+}
+
+.item-highlighted {
+  color: white;
+  background-color: #4095bf;
+}
+
+.item-header {
+  background-color: #eeeeee;
+  color: #454545;
+  font-weight: bold;
 }
