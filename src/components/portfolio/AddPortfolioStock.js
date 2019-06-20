@@ -92,7 +92,7 @@ import moment from "moment";
             <label htmlFor="cost">Cost Basis</label>
           </div>
             <div className="input-field">
-              <button className="btn pink lighten-1 z-depth-0 center">
+              <button className="btn blue lighten-1 z-depth-0 center">
                   Done
               </button>
                        

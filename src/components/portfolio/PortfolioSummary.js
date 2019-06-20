@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css/dist/css/materialize.min.css";
+import { NavLink } from 'react-router-dom'
  class PortfolioSummary extends Component {
     
     componentDidMount()
@@ -17,8 +18,8 @@ import "materialize-css/dist/css/materialize.min.css";
                     <i className="large material-icons">mode_edit</i>
                 </a>
                 <ul>
-                <li><a className="btn-floating green"><i className="material-icons">publish</i></a></li>
-                <li><a className="btn-floating blue"><i className="material-icons">add</i></a></li>
+                <li><NavLink to='/add-stock' className="btn-floating green"><i className="material-icons">publish</i></NavLink></li>
+                <li><NavLink to='/add-stock' className="btn-floating blue"><i className="material-icons">add</i></NavLink></li>
                 </ul>
             </div>
             </div>
