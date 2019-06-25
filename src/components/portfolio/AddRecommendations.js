@@ -30,7 +30,8 @@ import moment from "moment";
     format: "ddd d, mmm",
     formatMoment: "ddd D, MMM",
     targetprice: '',
-    recommendation: ''
+    recommendation: '',
+    broker: ''
      };
     
      handleChange =(e) =>
@@ -101,6 +102,10 @@ import moment from "moment";
           <div className="input-field">
             <input type="text" id="targetprice" onChange={this.handleChange}/>
             <label htmlFor="targetprice">Target Price</label>
+          </div>
+          <div className="input-field">
+            <input type="text" id="broker" onChange={this.handleChange}/>
+            <label htmlFor="broker">Broker Name</label>
           </div>
           
             <div className="input-field">
