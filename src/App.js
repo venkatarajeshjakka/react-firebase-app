@@ -8,6 +8,7 @@ import SignUp from './components/auth/SignUp'
 import CreateProject from './components/projects/CreateProject'
 import AddStock from './components/portfolio/AddPortfolioStock'
 import Portfolio from './components/portfolio/PortfolioSummary'
+import AddReco from './components/portfolio/AddRecommendations'
 class  App extends Component {
   render()
   {
@@ -23,6 +24,7 @@ class  App extends Component {
           <Route path='/create' component={CreateProject} />
           <Route path='/add-stock' component={AddStock} />
           <Route path='/portfolio' component={Portfolio} />
+          <Route path='/add-reco' component={AddReco} />
         </Switch>
         </div>
       </BrowserRouter>

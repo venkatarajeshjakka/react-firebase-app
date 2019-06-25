@@ -18,7 +18,7 @@ import { NavLink } from 'react-router-dom'
                     <i className="large material-icons">mode_edit</i>
                 </a>
                 <ul>
-                <li><NavLink to='/add-stock' className="btn-floating green"><i className="material-icons">publish</i></NavLink></li>
+                <li><NavLink to='/add-reco' className="btn-floating green"><i className="material-icons">publish</i></NavLink></li>
                 <li><NavLink to='/add-stock' className="btn-floating blue"><i className="material-icons">add</i></NavLink></li>
                 </ul>
             </div>
