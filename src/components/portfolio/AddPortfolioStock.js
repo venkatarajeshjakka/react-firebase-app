@@ -4,6 +4,8 @@ import { getStocks, matchStocks } from '../../data/stockData';
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
 import moment from "moment";
+import { connect } from 'react-redux'
+import { createPortfolioStock } from '../../store/actions/portfolioAction'
  class AddPortfolioStock extends Component {
     
   componentDidMount() {
@@ -24,7 +26,7 @@ import moment from "moment";
     state = { value: '', date: new Date(),
     format: "ddd d, mmm",
     formatMoment: "ddd D, MMM",
-    quanity: '',
+    quantity: '',
     cost: ''
      };
     
@@ -39,6 +41,8 @@ import moment from "moment";
      {
          e.preventDefault();
          console.log(this.state);
+         this.props.createPortfolioStock(this.state)
+        this.props.history.push('/portfolio');
      }
     render() {
       
@@ -84,7 +88,7 @@ import moment from "moment";
           <input id="date" type="text" className="datepicker dateset" defaultValue={moment(this.state.date).format(this.state.formatMoment )} />
             </div>  
           <div className="input-field">
-            <input type="text" id="quanity" onChange={this.handleChange}/>
+            <input type="text" id="quantity" onChange={this.handleChange}/>
             <label htmlFor="quantity">Shares</label>
           </div>
           <div className="input-field">
@@ -107,4 +111,17 @@ import moment from "moment";
     }
 }
 
-export default AddPortfolioStock;
+const mapStateToProps = (state) =>
+{
+    return{
+        
+        authState: state.firebase.auth
+    }
+}
+const mapDispatchToProps = (dispatch) =>
+{
+    return{
+      createPortfolioStock: (portfolio) => dispatch(createPortfolioStock(portfolio))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps) (AddPortfolioStock);
