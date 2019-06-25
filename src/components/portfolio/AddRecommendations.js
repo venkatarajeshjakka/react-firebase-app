@@ -4,9 +4,7 @@ import { getStocks, matchStocks } from '../../data/stockData';
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
 import moment from "moment";
-import { connect } from 'react-redux'
-import { createPortfolioStock } from '../../store/actions/portfolioAction'
- class AddPortfolioStock extends Component {
+ class AddRecommendations extends Component {
     
   componentDidMount() {
     var context = this;
@@ -22,12 +20,18 @@ import { createPortfolioStock } from '../../store/actions/portfolioAction'
       },
       autoClose: true
     });
+
+    
+      var elems = document.querySelectorAll('select');
+      M.FormSelect.init(elems, null);
+  
   }
     state = { value: '', date: new Date(),
     format: "ddd d, mmm",
     formatMoment: "ddd D, MMM",
-    quantity: '',
-    cost: ''
+    targetprice: '',
+    recommendation: '',
+    broker: ''
      };
     
      handleChange =(e) =>
@@ -41,14 +45,12 @@ import { createPortfolioStock } from '../../store/actions/portfolioAction'
      {
          e.preventDefault();
          console.log(this.state);
-         this.props.createPortfolioStock(this.state)
-        this.props.history.push('/portfolio');
      }
     render() {
       
         return (
           <div className="container">
-            <h5 className="center-align">Add Stock</h5>
+            <h5 className="center-align">Add Recommendation</h5>
             <div className="row">
             <form onSubmit={this.handleSubmit} className="white">
           <div className="input-field">
@@ -87,14 +89,25 @@ import { createPortfolioStock } from '../../store/actions/portfolioAction'
           <i className="material-icons prefix">date_range</i>
           <input id="date" type="text" className="datepicker dateset" defaultValue={moment(this.state.date).format(this.state.formatMoment )} />
             </div>  
+
+            <div className="input-field ">
+          <select id="recommendation" value={this.state.recommendation} onChange={this.handleChange}>
+            <option value="" disabled selected>Choose your option</option>
+            <option value="Buy">Buy</option>
+            <option value="Hold">Hold</option>
+            <option value="Sell">Sell</option>
+        </select>
+        <label htmlFor="recommendation">Select Recommendation</label>
+      </div>
           <div className="input-field">
-            <input type="text" id="quantity" onChange={this.handleChange}/>
-            <label htmlFor="quantity">Shares</label>
+            <input type="text" id="targetprice" onChange={this.handleChange}/>
+            <label htmlFor="targetprice">Target Price</label>
           </div>
           <div className="input-field">
-            <input type="text" id="cost" onChange={this.handleChange}/>
-            <label htmlFor="cost">Cost Basis</label>
+            <input type="text" id="broker" onChange={this.handleChange}/>
+            <label htmlFor="broker">Broker Name</label>
           </div>
+          
             <div className="input-field">
               <button className="btn blue lighten-1 z-depth-0 center">
                   Done
@@ -111,17 +124,4 @@ import { createPortfolioStock } from '../../store/actions/portfolioAction'
     }
 }
 
-const mapStateToProps = (state) =>
-{
-    return{
-        
-        authState: state.firebase.auth
-    }
-}
-const mapDispatchToProps = (dispatch) =>
-{
-    return{
-      createPortfolioStock: (portfolio) => dispatch(createPortfolioStock(portfolio))
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps) (AddPortfolioStock);
+export default AddRecommendations;

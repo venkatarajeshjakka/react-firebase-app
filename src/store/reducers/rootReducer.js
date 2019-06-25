@@ -3,12 +3,14 @@ import projectReducer from './projectReducer'
 import { combineReducers } from 'redux'
 import { firestoreReducer } from 'redux-firestore'
 import { firebaseReducer } from 'react-redux-firebase'
+import portfolioReducer from './portfolioReducer'
 
 const rootReducer = combineReducers({
     auth : authReducer,
     projects: projectReducer,
     firestore: firestoreReducer,
-    firebase: firebaseReducer
+    firebase: firebaseReducer,
+    portfolio: portfolioReducer
 });
 
 export default rootReducer;
