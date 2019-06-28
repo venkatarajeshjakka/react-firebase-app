@@ -13,7 +13,7 @@ export const createPortfolioStock = (portfolio) =>
         const stock= uderscore.findWhere(stocks,{name : portfolio.value });
 
         const stockCode= stock.abbr;
-        
+       
         fireStore.collection('portfolios').add({
             stockName: portfolio.value,
             stockCode: stockCode,
@@ -22,6 +22,7 @@ export const createPortfolioStock = (portfolio) =>
             authorFirstName: profile.firstName,
             authorLastName: profile.lastName,
             authorId: authorId,
+            date: portfolio.date,
             createdAt: new Date()
         }).then(() => {
             dispatch({type: 'CREATE_PORTFOLIOSTOCK', portfolio});

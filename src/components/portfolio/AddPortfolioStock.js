@@ -7,28 +7,28 @@ import moment from "moment";
 import { connect } from 'react-redux'
 import { createPortfolioStock } from '../../store/actions/portfolioAction'
  class AddPortfolioStock extends Component {
-    
+  state = { 
+            value: '', date: new Date(),
+            format: "ddd d, mmm",
+            formatMoment: "ddd D, MMM",
+            quantity: '',
+            cost: '',
+          };
   componentDidMount() {
+    
     var context = this;
-
     var elems = document.querySelectorAll(".dateset");
     M.Datepicker.init(elems, {
-      defaultDate: new Date(),
+      defaultDate:this.state.date,
       format: this.state.format,
       container: "body",
       onSelect: function(date) {
-        context.setState({ date: context.state.date });
-        console.log(date); // Selected date is logged
+        context.setState({ date: date });
       },
       autoClose: true
     });
   }
-    state = { value: '', date: new Date(),
-    format: "ddd d, mmm",
-    formatMoment: "ddd D, MMM",
-    quantity: '',
-    cost: ''
-     };
+    
     
      handleChange =(e) =>
      {
@@ -36,13 +36,13 @@ import { createPortfolioStock } from '../../store/actions/portfolioAction'
              [e.target.id]: e.target.value
          })
      }
- 
+
      handleSubmit =(e) =>
      {
          e.preventDefault();
          console.log(this.state);
          this.props.createPortfolioStock(this.state)
-        this.props.history.push('/portfolio');
+         this.props.history.push('/portfolio');
      }
     render() {
       
@@ -85,7 +85,7 @@ import { createPortfolioStock } from '../../store/actions/portfolioAction'
                   </div>
           <div className="input-field">
           <i className="material-icons prefix">date_range</i>
-          <input id="date" type="text" className="datepicker dateset" defaultValue={moment(this.state.date).format(this.state.formatMoment )} />
+          <input id="date" type="text" onChange= {this.handleChange} onSelect ={this.handleChange} className="datepicker dateset" defaultValue={moment(this.state.date).format(this.state.formatMoment )} />
             </div>  
           <div className="input-field">
             <input type="text" id="quantity" onChange={this.handleChange}/>
