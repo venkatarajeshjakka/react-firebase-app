@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import underscore from 'underscore'
+import { getStockInfo } from '../../data/stockData';
  class PortfolioSummary extends Component {
       
         getCurrentStocks = (portfolioStockList) => 
@@ -26,12 +27,15 @@ import underscore from 'underscore'
     { 
         var elems = document.querySelectorAll('.fixed-action-btn');
         M.FloatingActionButton.init(elems, {direction:'top' ,hoverEnabled: true});
-        
+     
     }
     render() {
         const {auth,portfolioStockList} =this.props;
         var currentPositionList =this.getCurrentStocks(portfolioStockList);
         console.log(currentPositionList);
+
+        var resonse= getStockInfo(currentPositionList);
+        console.log('formatted response', resonse);
         return (
             <div className="container">
 
