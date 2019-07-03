@@ -7,6 +7,7 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import underscore from 'underscore'
 import { getRecommendations } from '../../store/actions/recommendationsAction'
+import Topideas from '../portfolio/cards/Topideas'
  class PortfolioSummary extends Component {
       
         getCurrentStocks = (portfolioStockList) => 
@@ -39,6 +40,11 @@ import { getRecommendations } from '../../store/actions/recommendationsAction'
             <div className="container">`
             <div>
             <h5>Hi {profile.firstName} {profile.lastName}</h5>
+            </div>
+            <div className="row">
+                <div className="col s12 m6 l6">
+                    <Topideas />
+                </div>
             </div>
             <div className="fixed-action-btn">
                 <a className="btn-floating btn-large red">
