@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import underscore from 'underscore'
-import { getStockInfo } from '../../data/stockData';
+import { getRecommendations } from '../../store/actions/recommendationsAction'
  class PortfolioSummary extends Component {
       
         getCurrentStocks = (portfolioStockList) => 
@@ -27,18 +27,19 @@ import { getStockInfo } from '../../data/stockData';
     { 
         var elems = document.querySelectorAll('.fixed-action-btn');
         M.FloatingActionButton.init(elems, {direction:'top' ,hoverEnabled: true});
-     
+        this.props.dispatch(getRecommendations());
     }
     render() {
-        const {auth,portfolioStockList} =this.props;
-        var currentPositionList =this.getCurrentStocks(portfolioStockList);
-        console.log(currentPositionList);
+       
+        const {profile,recommendationsList,filteredrecommendationList} =this.props
+        console.log('recommendation list ',recommendationsList);
 
-        var resonse= getStockInfo(currentPositionList);
-        console.log('formatted response', resonse);
+        console.log('fileterd',filteredrecommendationList);
         return (
-            <div className="container">
-
+            <div className="container">`
+            <div>
+            <h5>Hi {profile.firstName} {profile.lastName}</h5>
+            </div>
             <div className="fixed-action-btn">
                 <a className="btn-floating btn-large red">
                     <i className="large material-icons">mode_edit</i>
@@ -58,7 +59,10 @@ const mapStateToProps = (state) =>
     
     return{
         authState: state.firebase.auth,
-        portfolioStockList: state.firestore.ordered.portfolios
+        profile: state.firebase.profile,
+        portfolioStockList: state.firestore.ordered.portfolios,
+        recommendationsList : state.recommendation.recommendations,
+        filteredrecommendationList : state.recommendation.filteredRecommendations
     }
 }
 export default compose(
