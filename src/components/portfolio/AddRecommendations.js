@@ -4,8 +4,19 @@ import { getStocks, matchStocks } from '../../data/stockData';
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
 import moment from "moment";
+import { connect } from 'react-redux'
+import { addRecommendations } from '../../store/actions/recommendationsAction'
+
  class AddRecommendations extends Component {
-    
+  state = 
+  { 
+  value: '', date: new Date(),
+  format: "ddd d, mmm",
+  formatMoment: "ddd D, MMM",
+  targetprice: '',
+  recommendation: '',
+  broker: ''
+   };
   componentDidMount() {
     var context = this;
 
@@ -15,7 +26,7 @@ import moment from "moment";
       format: this.state.format,
       container: "body",
       onSelect: function(date) {
-        context.setState({ date: context.state.date });
+        context.setState({ date: date});
         console.log(date); // Selected date is logged
       },
       autoClose: true
@@ -26,13 +37,7 @@ import moment from "moment";
       M.FormSelect.init(elems, null);
   
   }
-    state = { value: '', date: new Date(),
-    format: "ddd d, mmm",
-    formatMoment: "ddd D, MMM",
-    targetprice: '',
-    recommendation: '',
-    broker: ''
-     };
+   
     
      handleChange =(e) =>
      {
@@ -45,6 +50,8 @@ import moment from "moment";
      {
          e.preventDefault();
          console.log(this.state);
+         this.props.addRecommendations(this.state)
+         this.props.history.push('/portfolio');
      }
     render() {
       
@@ -124,4 +131,17 @@ import moment from "moment";
     }
 }
 
-export default AddRecommendations;
+const mapStateToProps = (state) =>
+{
+    return{
+        
+        authState: state.firebase.auth
+    }
+}
+const mapDispatchToProps = (dispatch) =>
+{
+    return{
+      addRecommendations: (input) => dispatch(addRecommendations(input))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps) (AddRecommendations);

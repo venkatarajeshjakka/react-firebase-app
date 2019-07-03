@@ -2,17 +2,50 @@ import React, { Component } from 'react'
 import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css/dist/css/materialize.min.css";
 import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from 'redux'
+import underscore from 'underscore'
+import { getRecommendations } from '../../store/actions/recommendationsAction'
+import Topideas from '../portfolio/cards/Topideas'
  class PortfolioSummary extends Component {
+      
+        getCurrentStocks = (portfolioStockList) => 
+        {
+            const stocks= underscore.map(portfolioStockList, function(item)
+            {
+                return {
+                    stockCode : item.stockCode,
+                    quantity : item.quantity,
+                    cost: item.cost
+                }
+            });
+            
+          return stocks;
+        }
     
     componentDidMount()
-    {    
+    { 
         var elems = document.querySelectorAll('.fixed-action-btn');
         M.FloatingActionButton.init(elems, {direction:'top' ,hoverEnabled: true});
+        this.props.dispatch(getRecommendations());
     }
     render() {
-        return (
-            <div className="container">
+       
+        const {profile,recommendationsList,filteredrecommendationList} =this.props
+        console.log('recommendation list ',recommendationsList);
 
+        console.log('fileterd',filteredrecommendationList);
+        return (
+            <div className="container">`
+            <div>
+            <h5>Hi {profile.firstName} {profile.lastName}</h5>
+            </div>
+            <div className="row">
+                <div className="col s12 m6 l6">
+                    <Topideas />
+                </div>
+            </div>
             <div className="fixed-action-btn">
                 <a className="btn-floating btn-large red">
                     <i className="large material-icons">mode_edit</i>
@@ -26,4 +59,29 @@ import { NavLink } from 'react-router-dom'
         )
     }
 }
-export default PortfolioSummary;
+const mapStateToProps = (state) =>
+{ 
+    console.log(state.firestore);
+    
+    return{
+        authState: state.firebase.auth,
+        profile: state.firebase.profile,
+        portfolioStockList: state.firestore.ordered.portfolios,
+        recommendationsList : state.recommendation.recommendations,
+        filteredrecommendationList : state.recommendation.filteredRecommendations
+    }
+}
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect((props) => {
+        if (!props.authState.uid) return []
+        return [
+            {
+                collection: 'portfolios',
+                where: [
+                    ['authorId', '==', props.authState.uid]
+                    ]
+            }
+        ]
+    } )
+)(PortfolioSummary);
