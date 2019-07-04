@@ -8,6 +8,7 @@ import { compose } from 'redux'
 import underscore from 'underscore'
 import { getRecommendations } from '../../store/actions/recommendationsAction'
 import Topideas from '../portfolio/cards/Topideas'
+import Nsehigh from '../portfolio/cards/Nsehigh'
  class PortfolioSummary extends Component {
       
         getCurrentStocks = (portfolioStockList) => 
@@ -44,6 +45,9 @@ import Topideas from '../portfolio/cards/Topideas'
             <div className="row">
                 <div className="col s12 m6 l6">
                     <Topideas />
+                </div>
+                <div className="col s12 m6 l6">
+                    <Nsehigh />
                 </div>
             </div>
             <div className="fixed-action-btn">
