@@ -3,44 +3,36 @@ import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css/dist/css/materialize.min.css";
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { firestoreConnect } from 'react-redux-firebase'
-import { compose } from 'redux'
-import underscore from 'underscore'
 import { getRecommendations } from '../../store/actions/recommendationsAction'
+import { getPortfolioStocks } from '../../store/actions/portfolioAction'
 import Topideas from '../portfolio/cards/Topideas'
 import Nsehigh from '../portfolio/cards/Nsehigh'
+import PortfolioCard from '../portfolio/cards/PortfolioCard'
+
  class PortfolioSummary extends Component {
-      
-        getCurrentStocks = (portfolioStockList) => 
-        {
-            const stocks= underscore.map(portfolioStockList, function(item)
-            {
-                return {
-                    stockCode : item.stockCode,
-                    quantity : item.quantity,
-                    cost: item.cost
-                }
-            });
-            
-          return stocks;
-        }
     
     componentDidMount()
     { 
         var elems = document.querySelectorAll('.fixed-action-btn');
         M.FloatingActionButton.init(elems, {direction:'top' ,hoverEnabled: true});
         this.props.dispatch(getRecommendations());
+        this.props.dispatch(getPortfolioStocks());
     }
     render() {
        
-        const {profile,recommendationsList,filteredrecommendationList} =this.props
-        console.log('recommendation list ',recommendationsList);
-
-        console.log('fileterd',filteredrecommendationList);
+        const {profile,portfolioStockList} =this.props
+        
+        console.log(portfolioStockList);
         return (
             <div className="container">`
             <div>
             <h5>Hi {profile.firstName} {profile.lastName}</h5>
+            </div>
+            <div className="row">
+                <div className="col s12 m6 l6">
+                    <PortfolioCard />
+                </div>
+
             </div>
             <div className="row">
                 <div className="col s12 m6 l6">
@@ -65,27 +57,12 @@ import Nsehigh from '../portfolio/cards/Nsehigh'
 }
 const mapStateToProps = (state) =>
 { 
-    console.log(state.firestore);
-    
     return{
         authState: state.firebase.auth,
         profile: state.firebase.profile,
-        portfolioStockList: state.firestore.ordered.portfolios,
+        portfolioStockList: state.portfolio.filteredPortfolioStocks,
         recommendationsList : state.recommendation.recommendations,
         filteredrecommendationList : state.recommendation.filteredRecommendations
     }
 }
-export default compose(
-    connect(mapStateToProps),
-    firestoreConnect((props) => {
-        if (!props.authState.uid) return []
-        return [
-            {
-                collection: 'portfolios',
-                where: [
-                    ['authorId', '==', props.authState.uid]
-                    ]
-            }
-        ]
-    } )
-)(PortfolioSummary);
+export default connect(mapStateToProps, null)(PortfolioSummary);

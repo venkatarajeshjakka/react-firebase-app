@@ -1,17 +1,9 @@
+import underscore from 'underscore'
 const initState ={
 
-    projects: [
-        {
-            stockName: '',
-            stockCode: '',
-            quantity: '',
-            cost: '',
-            authorFirstName: '',
-            authorLastName: '',
-            authorId: '',
-            createdAt: new Date()
-        }
-    ]
+    portfolioStocks: [],
+    loading: false,
+    filteredPortfolioStocks: []
 }
 
 const portfolioReducer = (state = initState, action) =>
@@ -26,6 +18,23 @@ const portfolioReducer = (state = initState, action) =>
         console.log('create Portfolio error', action.err);
         return state;
         
+        case 'GET_PORTFOLIOSTOCKS':
+        const stocks= underscore.map(action.portfolioStocksCollection, function(item)
+        {
+            return {
+                id : item.id,
+                stockCode : item.data.stockCode,
+                stockName: item.data.value,
+                quantity: item.data.quantity,
+                cost: item.data.cost,
+                }
+        });
+        return {
+            ...state,
+            loading : true,
+            portfolioStocks : action.portfolioStocksCollection,
+            filteredPortfolioStocks : stocks
+        }
         default:
         return state;
     }
