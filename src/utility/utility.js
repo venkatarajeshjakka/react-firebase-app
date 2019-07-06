@@ -5,8 +5,6 @@ let utility ={
  grouped : function(input)
  {
     var groupedItems = underScore.groupBy(input,'stockCode');
-        //get array of stock codes
-
     
     var stockCodeArray = Object.keys(groupedItems);
 

@@ -1,18 +1,10 @@
 import _ from 'lodash';
-import axios from 'axios';
-import underscore from 'underscore';
 import { grouped } from '../utility/utility'
 
 
 export function getStockInfo (portfolioStockList) 
 {
-  const portfolioStockData = [];
-  var groupedResponse= grouped(portfolioStockList);
-  console.log('grouped response', groupedResponse);
-  var stockCodeArray =underscore.pluck(groupedResponse,'stockCode');
-  console.log('stock Code array', stockCodeArray);
-  
-  return portfolioStockData;
+  return grouped(portfolioStockList);
 }
 
 

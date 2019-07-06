@@ -1,4 +1,5 @@
 import underscore from 'underscore'
+import { getStockInfo } from '../../data/stockData'
 const initState ={
 
     portfolioStocks: [],
@@ -29,11 +30,13 @@ const portfolioReducer = (state = initState, action) =>
                 cost: item.data.cost,
                 }
         });
+
+        const filteredStocks =getStockInfo(stocks);
         return {
             ...state,
             loading : true,
             portfolioStocks : action.portfolioStocksCollection,
-            filteredPortfolioStocks : stocks
+            filteredPortfolioStocks : filteredStocks
         }
         default:
         return state;
