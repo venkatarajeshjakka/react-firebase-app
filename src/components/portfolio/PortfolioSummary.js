@@ -22,7 +22,6 @@ import PortfolioCard from '../portfolio/cards/PortfolioCard'
        
         const {profile,portfolioStockList} =this.props
         
-        console.log(portfolioStockList);
         return (
             <div className="container">`
             <div>
@@ -30,7 +29,7 @@ import PortfolioCard from '../portfolio/cards/PortfolioCard'
             </div>
             <div className="row">
                 <div className="col s12 m6 l6">
-                    <PortfolioCard />
+                    <PortfolioCard portfolioStockList={portfolioStockList}/>
                 </div>
 
             </div>

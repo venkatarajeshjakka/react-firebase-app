@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
-import underscore from 'underscore'
+import { getPortfolioStocksData } from '../../../store/actions/nseStockDataAction'
+import { connect } from 'react-redux'
 class PortfolioCard extends Component {
     constructor(props)
     {
         super(props);
         this.state = {
-
+            portfolioStockList: []
         }
     }
     componentDidMount()
     {
-       
+        this.props.dispatch(getPortfolioStocksData());
     }
     
     render() {
 
-        
+        const { nseStocks } =this.props;
+        console.log('nse data:', nseStocks);
         return (
             
                 <div className="card">
@@ -60,4 +62,12 @@ class PortfolioCard extends Component {
     }
 }
 
-export default PortfolioCard
+const mapStateToProps = (state) =>
+{ 
+    return{
+        authState: state.firebase.auth,
+         nseStocks: state.nseData.data
+       
+    }
+}
+export default connect(mapStateToProps, null)(PortfolioCard);

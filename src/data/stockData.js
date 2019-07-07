@@ -1,4 +1,4 @@
-import _ from 'lodash';
+
 import { grouped } from '../utility/utility'
 
 
@@ -6,7 +6,6 @@ export function getStockInfo (portfolioStockList)
 {
   return grouped(portfolioStockList);
 }
-
 
 export function getStocks() {
     return [
