@@ -1,5 +1,5 @@
 
-import { grouped } from '../utility/utility'
+import { grouped , nseData } from '../utility/utility'
 
 
 export function getStockInfo (portfolioStockList) 
@@ -7,6 +7,10 @@ export function getStockInfo (portfolioStockList)
   return grouped(portfolioStockList);
 }
 
+export function nseStockMapping(input)
+{
+   return nseData(input);
+}
 export function getStocks() {
     return [
       { abbr: 'ADANIPORTS', name: 'Adani Ports & Special Economic Zone Ltd.' },

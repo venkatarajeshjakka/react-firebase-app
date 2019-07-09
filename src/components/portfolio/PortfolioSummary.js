@@ -6,30 +6,36 @@ import { connect } from 'react-redux'
 import { getRecommendations } from '../../store/actions/recommendationsAction'
 import { getPortfolioStocks } from '../../store/actions/portfolioAction'
 import Topideas from '../portfolio/cards/Topideas'
-import Nsehigh from '../portfolio/cards/Nsehigh'
 import PortfolioCard from '../portfolio/cards/PortfolioCard'
-
+import { getPortfolioStocksData } from '../../store/actions/nseStockDataAction'
  class PortfolioSummary extends Component {
     
+    constructor(props)
+    {
+        super(props);
+       
+        this.props.dispatch(getRecommendations());
+        this.props.dispatch(getPortfolioStocks());
+        this.props.dispatch(getPortfolioStocksData());
+    }
     componentDidMount()
     { 
         var elems = document.querySelectorAll('.fixed-action-btn');
         M.FloatingActionButton.init(elems, {direction:'top' ,hoverEnabled: true});
-        this.props.dispatch(getRecommendations());
-        this.props.dispatch(getPortfolioStocks());
+        
     }
     render() {
        
-        const {profile,portfolioStockList} =this.props
+        const {profile,portfolioStockList,nseStocks} =this.props
         
         return (
             <div className="container">`
             <div>
-            <h5>Hi {profile.firstName} {profile.lastName}</h5>
+            <h5>Hi,{profile.firstName} {profile.lastName}</h5>
             </div>
             <div className="row">
                 <div className="col s12 m6 l6">
-                    <PortfolioCard portfolioStockList={portfolioStockList}/>
+                    <PortfolioCard portfolioStockList={portfolioStockList} nseStocks={nseStocks} />
                 </div>
 
             </div>
@@ -37,9 +43,7 @@ import PortfolioCard from '../portfolio/cards/PortfolioCard'
                 <div className="col s12 m6 l6">
                     <Topideas />
                 </div>
-                <div className="col s12 m6 l6">
-                    <Nsehigh />
-                </div>
+                
             </div>
             <div className="fixed-action-btn">
                 <a className="btn-floating btn-large red">
@@ -61,7 +65,8 @@ const mapStateToProps = (state) =>
         profile: state.firebase.profile,
         portfolioStockList: state.portfolio.filteredPortfolioStocks,
         recommendationsList : state.recommendation.recommendations,
-        filteredrecommendationList : state.recommendation.filteredRecommendations
+        filteredrecommendationList : state.recommendation.filteredRecommendations,
+        nseStocks: state.nseData.data
     }
 }
 export default connect(mapStateToProps, null)(PortfolioSummary);

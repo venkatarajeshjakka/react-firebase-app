@@ -1,6 +1,7 @@
 
 import axios from 'axios'
 import underscore from 'underscore'
+import { nseStockMapping } from '../../data/stockData'
 export const getPortfolioStocksData = () =>
 {
     return (dispatch, getState, { getFirebase, getFirestore }) =>
@@ -35,13 +36,9 @@ export const getPortfolioStocksData = () =>
             console.log(baseUrl);
             axios.get(baseUrl).then( response => 
             {
-                //let stocks = response.data;
-                //const stockResponse = {
-                    //lastTradedDate : stocks['tradedDate'],
-                    //data : stocks['data']
-                //}
-                console.log(response.data);
-                //dispatch({type: 'GET_PORTFOLIOSTOCKSDATA', stockResponse})
+                let stocks = response.data;
+                var nseData = nseStockMapping(stocks);
+                dispatch({type: 'GET_PORTFOLIOSTOCKSDATA', nseData})
             }).catch( err => {
                 console.log(err);
             }

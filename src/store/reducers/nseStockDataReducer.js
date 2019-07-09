@@ -1,7 +1,5 @@
 
 const initState ={
-
-    lastTradedDate : '',
     data : []
 }
 
@@ -14,8 +12,7 @@ const nseStockDataReducer = (state = initState, action) =>
         
         return {
             ...state,
-            lastTradedDate : action.stockResponse.tradedDate,
-            data : action.stockResponse.data
+            data : action.nseData
         }
         default:
         return state;

@@ -30,6 +30,41 @@ let stockCalculation ={
             totalValue : sum
         };
         return data;
+    },
+    portfolioCalculation : function( portfolioStocks,nseStockData)
+    {
+        var totalInvestmentValueArray = underScore.pluck(portfolioStocks,'totalValue');
+        var totalInvestmentValue = loadash.sum(totalInvestmentValueArray);
+        console.log(nseStockData);
+        var dailyStockItem = underScore.map(portfolioStocks, function(item)
+        {
+            
+            var stockData = underScore.findWhere(nseStockData, {stockCode: item.stockCode});
+            console.log(stockData);
+            var changeInPrice = stockData.price.regularMarketChange;
+            var currentPrice = stockData.price.regularMarketPrice;
+            var totalChange= changeInPrice*item.totalQuantity;
+            var currentValue =item.totalQuantity*currentPrice;
+            return {
+                totalChange: totalChange,
+                currentValue: currentValue
+            }
+        });
+        var totalChangeArray = underScore.pluck(dailyStockItem,'totalChange');
+        var todayTotalChange = loadash.sum(totalChangeArray);
+
+        var totalCurrentValueArray = underScore.pluck(dailyStockItem,'currentValue');
+        var todayTotalCurrenValue = loadash.sum(totalCurrentValueArray);
+
+        var data = {
+            currentValue : todayTotalCurrenValue,
+            investedValue : totalInvestmentValue,
+            todayGain : todayTotalChange
+        }
+
+        return data;
+
+
     }
 }
 

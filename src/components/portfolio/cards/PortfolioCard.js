@@ -1,42 +1,59 @@
 import React, { Component } from 'react'
-import { getPortfolioStocksData } from '../../../store/actions/nseStockDataAction'
-import { connect } from 'react-redux'
+import { portfolioCalculation } from '../../../utility/stockCalculation'
 class PortfolioCard extends Component {
     constructor(props)
     {
         super(props);
         this.state = {
-            portfolioStockList: []
+            currentValue: '',
+            investedValue: '',
+            todayGain: '',
+            loaded : false
         }
     }
-    componentDidMount()
-    {
-        this.props.dispatch(getPortfolioStocksData());
-    }
     
+    updateState = (portfolioStockList,nseStocks) =>
+    {
+        if(nseStocks && nseStocks.length > 1 )
+        {   
+                
+            var data = portfolioCalculation(portfolioStockList,nseStocks);
+            if(this.state.loaded === false)
+            {
+                this.setState({ currentValue: data.currentValue,
+                    investedValue: data.investedValue,
+                     todayGain: data.todayGain,
+                      loaded: true});
+
+            }
+            
+        }
+    }
+
     render() {
 
-        const { nseStocks } =this.props;
-        console.log('nse data:', nseStocks);
+        const { nseStocks, portfolioStockList} =this.props;
+        
+        this.updateState(portfolioStockList,nseStocks);
+        
         return (
-            
+            <div>
+            <h5 className="left-align">My Portfolio</h5>
                 <div className="card">
                     <div className="card-content">
-                        <span className="card-title">
-                            My Portfolio
-                        </span>
+                        
                         <div className="row">
                             <div className="col">
                                 <span>
-                                    Current Investment Value
+                                    Current Value
                                 </span>
-                                <p> 63,607.07</p>
+                                <p> {this.state.currentValue}</p>
                             </div>
                             <div className="col">
                             <span>
                              Day Gain
                                 </span>
-                                <p> - 690.03 (-1.07%)</p>
+                                <p> {this.state.todayGain}(-1.07%)</p>
                             </div>
                         </div>
                         <div className="row">
@@ -45,7 +62,7 @@ class PortfolioCard extends Component {
                                     Invested Amount
                                 </span>
                                 <p>
-                                    61,0000
+                                    {this.state.investedValue}
                                 </p>
                             </div>
                             <div className="col">
@@ -57,17 +74,12 @@ class PortfolioCard extends Component {
                     </div>
                     
                 </div>
+            </div>
+                
            
         )
     }
 }
 
-const mapStateToProps = (state) =>
-{ 
-    return{
-        authState: state.firebase.auth,
-         nseStocks: state.nseData.data
-       
-    }
-}
-export default connect(mapStateToProps, null)(PortfolioCard);
+
+export default PortfolioCard;
