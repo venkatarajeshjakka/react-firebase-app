@@ -1,9 +1,22 @@
 html{
   min-height: 100%;
 }
-
+nav .nav-wrapper{
+  background-color: #ff1e50;
+  transform: translateZ(1);
+  align-items: center
+}
 nav .brand-logo {
   margin-left: 0px;
+  font-family: CWC,Arial,sans-serif;
+  font-weight: 600;
+}
+
+
+nav ul a{
+  text-transform: uppercase;
+  font-family: CWC,Arial,sans-serif;
+  font-weight: 600;
 }
 body {
   margin: 0;
@@ -71,4 +84,73 @@ textarea.materialize-textarea:focus:not([readonly])
   background-color: #eeeeee;
   color: #454545;
   font-weight: bold;
+}
+.content-hero-background
+{
+  position: absolute;
+  top: 9%;
+  right: 0;
+  height: 60%;
+  background-color: #232882;
+  overflow: hidden;
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
+  margin-top: 0rem;
+}
+
+.content-hero-intro-title
+{
+  font-size: 2.1rem;
+  color: #fff;
+  font-weight: 300;
+  line-height: 1;
+  font-family: CWC, Arial, sans-serif;
+}
+
+.content-hero-intro-title-bold
+{
+  font-weight: 600;
+  text-transform: capitalize
+}
+.content-hero-greeting
+{
+  position: relative;
+  overflow: hidden;
+  transition: opacity .4s ease;
+  padding-top: 1rem;
+}
+
+.card-header
+{
+  position: relative;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.card-header-title
+{
+    font-size: 1.5rem;
+    color: #ff1e50;
+    font-weight: 600;
+    text-shadow: 0 2px 5px rgba(0,0,0,.4);
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.card-header-title span
+{
+  color: white;
+}
+
+@media only screen and (min-width: 993px)
+{
+  .container {
+    width: 90% !important;
+}
 }
