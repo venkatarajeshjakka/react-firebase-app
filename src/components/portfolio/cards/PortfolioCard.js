@@ -8,12 +8,17 @@ class PortfolioCard extends Component {
             currentValue: '',
             investedValue: '',
             todayGain: '',
-            loaded : false
+            loaded : false,
+            dailyChangePercentage : '',
+            totalGain : '',
+            gainPercentage : ''
         }
+        
     }
     
-    updateState = (portfolioStockList,nseStocks) =>
+    updateState = () =>
     {
+        const { nseStocks, portfolioStockList} =this.props;
         if(nseStocks && nseStocks.length > 1 )
         {   
                 
@@ -23,19 +28,19 @@ class PortfolioCard extends Component {
                 this.setState({ currentValue: data.currentValue,
                     investedValue: data.investedValue,
                      todayGain: data.todayGain,
-                      loaded: true});
+                      loaded: true,
+                      dailyChangePercentage : data.dailyChangePercentage,
+                      totalGain : data.totalGain,
+                    gainPercentage : data.gainPercentage
+                    });
 
             }
             
         }
     }
-
     render() {
-
-        const { nseStocks, portfolioStockList} =this.props;
-        
-        this.updateState(portfolioStockList,nseStocks);
-        
+ 
+        this.updateState();
         return (
             <div>
             <h5 className="left-align">My Portfolio</h5>
@@ -53,7 +58,7 @@ class PortfolioCard extends Component {
                             <span>
                              Day Gain
                                 </span>
-                                <p> {this.state.todayGain}(-1.07%)</p>
+                                <p> {this.state.todayGain}({this.state.dailyChangePercentage}%)</p>
                             </div>
                         </div>
                         <div className="row">
@@ -67,7 +72,7 @@ class PortfolioCard extends Component {
                             </div>
                             <div className="col">
                                 <span>Returns</span>
-                                <p>2,607.07 (4.27%)</p>
+                                <p>{this.state.totalGain} ({this.state.gainPercentage}%)</p>
                             </div>
                         </div>
 

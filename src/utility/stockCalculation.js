@@ -40,10 +40,10 @@ let stockCalculation ={
         {
             
             var stockData = underScore.findWhere(nseStockData, {stockCode: item.stockCode});
-            console.log(stockData);
+            
             var changeInPrice = stockData.price.regularMarketChange;
             var currentPrice = stockData.price.regularMarketPrice;
-            var totalChange= changeInPrice*item.totalQuantity;
+            var totalChange= changeInPrice* parseInt(item.totalQuantity,10);
             var currentValue =item.totalQuantity*currentPrice;
             return {
                 totalChange: totalChange,
@@ -51,15 +51,27 @@ let stockCalculation ={
             }
         });
         var totalChangeArray = underScore.pluck(dailyStockItem,'totalChange');
+       
         var todayTotalChange = loadash.sum(totalChangeArray);
 
         var totalCurrentValueArray = underScore.pluck(dailyStockItem,'currentValue');
         var todayTotalCurrenValue = loadash.sum(totalCurrentValueArray);
-
+        
+        var originalPrice = todayTotalCurrenValue - todayTotalChange;
+        var dailyChangePercentage = (todayTotalChange/ originalPrice)*100;
+        var gain = todayTotalCurrenValue - totalInvestmentValue;
+        
+        var gainPercentage = ( gain / totalInvestmentValue)*100;
+        
         var data = {
             currentValue : todayTotalCurrenValue,
             investedValue : totalInvestmentValue,
-            todayGain : todayTotalChange
+            todayGain : Number.parseFloat(todayTotalChange).toFixed(2),
+            dailyChangePercentage : Number.parseFloat(dailyChangePercentage).toFixed(2),
+            totalGain : Number.parseFloat(gain).toFixed(2),
+            gainPercentage : Number.parseFloat(gainPercentage).toFixed(2),
+            todayChangeType : todayTotalChange < 0 ? 'negative' : 'positive',
+             overallChangeType : gain < 0 ? 'negative' : 'positive'
         }
 
         return data;
