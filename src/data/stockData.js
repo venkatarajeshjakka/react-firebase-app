@@ -1,50 +1,16 @@
-import _ from 'lodash';
-import axios from 'axios';
-import underscore from 'underscore';
-import { grouped } from '../utility/utility'
+
+import { grouped , nseData } from '../utility/utility'
 
 
 export function getStockInfo (portfolioStockList) 
 {
-  const portfolioStockData = [];
-  var groupedResponse= grouped(portfolioStockList);
-  console.log('grouped response', groupedResponse);
-  var stockCodeArray =underscore.pluck(groupedResponse,'stockCode');
-  console.log('stock Code array', stockCodeArray);
-  
-   const stockCode ='RELIANCE';
-    const NS='.NS';
-    const term = `${stockCode}${NS}`;
-   
-    console.log(term);
-    const key = 'F41ON15LGCFM4PR7';
-    const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${term}&apikey=${key}`;
-    console.log('url', url);
-    
-    axios.get(url)
-    .then(res => {
-      let stocks =  res.data['Global Quote'];
-       var response =
-       {
-         symbol: stockCode, 
-         price: stocks['05. price'],
-         volume: stocks['06. volume'], 
-         tradingday: stocks['07. latest trading day'],
-         previousClose: stocks['08. previous close'],
-         change: stocks['09. change'],
-         changePercentage: stocks['10. change percent'] 
-        };
-      
-      portfolioStockData.push(response);
-      
-      })
-    .catch(error => console.log(error));
-  
-  
-  return portfolioStockData;
+  return grouped(portfolioStockList);
 }
 
-
+export function nseStockMapping(input)
+{
+   return nseData(input);
+}
 export function getStocks() {
     return [
       { abbr: 'ADANIPORTS', name: 'Adani Ports & Special Economic Zone Ltd.' },

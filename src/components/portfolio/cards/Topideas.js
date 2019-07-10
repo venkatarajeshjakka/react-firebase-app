@@ -25,7 +25,7 @@ class Topideas extends Component {
         
         return (
             <div className="card">
-            <h6 className="center"> Doughnut Example</h6>
+            
             <Doughnut data={data} />
             </div>
         )

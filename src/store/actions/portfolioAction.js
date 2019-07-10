@@ -33,3 +33,31 @@ export const createPortfolioStock = (portfolio) =>
     }
 };
 
+export const getPortfolioStocks = () =>
+{
+    return (dispatch, getState, { getFirebase, getFirestore }) =>
+    {
+        const portfolioStocksCollection = [];
+        const fireStore = getFirestore();
+        const authorId = getState().firebase.auth.uid;
+        
+        fireStore.collection('portfolios').where('authorId', '==', authorId).get()
+        .then(querysnapshot =>  
+        {
+        querysnapshot.docs.map(doc =>
+        {
+            const documentValue = 
+            {
+                id: doc.id,
+                data: doc.data()
+            }
+            portfolioStocksCollection.push(documentValue);
+        });
+        dispatch({type: 'GET_PORTFOLIOSTOCKS', portfolioStocksCollection});
+       }).catch((err) => {
+        dispatch({type: 'GET_PORTFOLIOSTOCKS_ERROR', err});
+       });
+       
+    }
+};
+

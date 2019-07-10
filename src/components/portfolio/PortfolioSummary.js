@@ -3,48 +3,47 @@ import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css/dist/css/materialize.min.css";
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { firestoreConnect } from 'react-redux-firebase'
-import { compose } from 'redux'
-import underscore from 'underscore'
 import { getRecommendations } from '../../store/actions/recommendationsAction'
+import { getPortfolioStocks } from '../../store/actions/portfolioAction'
 import Topideas from '../portfolio/cards/Topideas'
+import PortfolioCard from '../portfolio/cards/PortfolioCard'
+import { getPortfolioStocksData } from '../../store/actions/nseStockDataAction'
  class PortfolioSummary extends Component {
-      
-        getCurrentStocks = (portfolioStockList) => 
-        {
-            const stocks= underscore.map(portfolioStockList, function(item)
-            {
-                return {
-                    stockCode : item.stockCode,
-                    quantity : item.quantity,
-                    cost: item.cost
-                }
-            });
-            
-          return stocks;
-        }
     
+    constructor(props)
+    {
+        super(props);
+       
+        this.props.dispatch(getRecommendations());
+        this.props.dispatch(getPortfolioStocks());
+        this.props.dispatch(getPortfolioStocksData());
+    }
     componentDidMount()
     { 
         var elems = document.querySelectorAll('.fixed-action-btn');
         M.FloatingActionButton.init(elems, {direction:'top' ,hoverEnabled: true});
-        this.props.dispatch(getRecommendations());
+        
     }
     render() {
        
-        const {profile,recommendationsList,filteredrecommendationList} =this.props
-        console.log('recommendation list ',recommendationsList);
-
-        console.log('fileterd',filteredrecommendationList);
+        const {profile,portfolioStockList,nseStocks} =this.props
+        
         return (
             <div className="container">`
             <div>
-            <h5>Hi {profile.firstName} {profile.lastName}</h5>
+            <h5>Hi,{profile.firstName} {profile.lastName}</h5>
+            </div>
+            <div className="row">
+                <div className="col s12 m6 l6">
+                    <PortfolioCard portfolioStockList={portfolioStockList} nseStocks={nseStocks} />
+                </div>
+
             </div>
             <div className="row">
                 <div className="col s12 m6 l6">
                     <Topideas />
                 </div>
+                
             </div>
             <div className="fixed-action-btn">
                 <a className="btn-floating btn-large red">
@@ -61,27 +60,13 @@ import Topideas from '../portfolio/cards/Topideas'
 }
 const mapStateToProps = (state) =>
 { 
-    console.log(state.firestore);
-    
     return{
         authState: state.firebase.auth,
         profile: state.firebase.profile,
-        portfolioStockList: state.firestore.ordered.portfolios,
+        portfolioStockList: state.portfolio.filteredPortfolioStocks,
         recommendationsList : state.recommendation.recommendations,
-        filteredrecommendationList : state.recommendation.filteredRecommendations
+        filteredrecommendationList : state.recommendation.filteredRecommendations,
+        nseStocks: state.nseData.data
     }
 }
-export default compose(
-    connect(mapStateToProps),
-    firestoreConnect((props) => {
-        if (!props.authState.uid) return []
-        return [
-            {
-                collection: 'portfolios',
-                where: [
-                    ['authorId', '==', props.authState.uid]
-                    ]
-            }
-        ]
-    } )
-)(PortfolioSummary);
+export default connect(mapStateToProps, null)(PortfolioSummary);

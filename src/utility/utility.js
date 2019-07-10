@@ -5,8 +5,6 @@ let utility ={
  grouped : function(input)
  {
     var groupedItems = underScore.groupBy(input,'stockCode');
-        //get array of stock codes
-
     
     var stockCodeArray = Object.keys(groupedItems);
 
@@ -21,6 +19,26 @@ let utility ={
 
     return finalData;
 
+ },
+
+ nseData : function(input)
+ {
+    var stockCodeArray = Object.keys(input);
+    let finalData =[]; 
+    for(var i=0; i<stockCodeArray.length; i++)
+    {
+        var individualStockInfo = input[Object.keys(input)[i]];
+        var stockCode = Object.keys(input)[i];
+        var stockArray = stockCode.split('.');
+        var stockSymbol = underScore.first(stockArray);
+        var data = {
+            stockCode: stockSymbol,
+            summaryDetail: individualStockInfo.summaryDetail,
+            price: individualStockInfo.price
+        }
+        finalData.push(data);
+    }
+    return finalData;
  }
 
 }
