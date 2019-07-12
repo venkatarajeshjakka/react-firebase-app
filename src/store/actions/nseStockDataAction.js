@@ -46,10 +46,26 @@ export const getPortfolioStocksData = () =>
         }).catch((err) => {
        
        });
-      
+    }
+};
+
+export const getIndicesData = () =>
+{
+    return (dispatch, getState) =>
+    {
        
-       
-       
-       
+        let stockCode ='^NSEI,^BSESN';
+        
+        const baseUrl= `https://rajesh-nse-data.herokuapp.com/api/get-nse-stocks?stockCode=${stockCode}`;
+        console.log(baseUrl);
+        axios.get(baseUrl).then( response => 
+        {
+            let stocks = response.data;
+            var nseData = nseStockMapping(stocks);
+            dispatch({type: 'GET_INDICIES_STOCKSDATA', nseData})
+        }).catch( err => {
+                console.log(err);
+            }
+        );
     }
 };

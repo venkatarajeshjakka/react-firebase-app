@@ -43,7 +43,10 @@ class PortfolioCard extends Component {
         this.updateState();
         return (
             <div>
-            <h5 className="left-align">My Portfolio</h5>
+            <div className="card-header">
+            <h5 className="card-header-title">My <span>Portfolio</span></h5>
+            </div>
+        
                 <div className="card">
                     <div className="card-content">
                         
