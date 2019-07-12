@@ -8,6 +8,7 @@ import { getPortfolioStocks } from '../../store/actions/portfolioAction'
 import Topideas from '../portfolio/cards/Topideas'
 import PortfolioCard from '../portfolio/cards/PortfolioCard'
 import { getPortfolioStocksData } from '../../store/actions/nseStockDataAction'
+import Indices from '../portfolio/cards/Indices'
  class PortfolioSummary extends Component {
     
     constructor(props)
@@ -38,8 +39,13 @@ import { getPortfolioStocksData } from '../../store/actions/nseStockDataAction'
             <h5 className="content-hero-intro-title"> <span className="content-hero-intro-title-bold"> Hi,</span>{profile.firstName} {profile.lastName}</h5>
             </div>
             <div className="row">
-                <div className="col s12 m6 l6">
+                <div className="col s12 m6 l4">
                     <PortfolioCard portfolioStockList={portfolioStockList} nseStocks={nseStocks} />
+                </div>
+                <div className="col s12 m6 l3">
+                    <div className="row">
+                        <Indices />
+                    </div>
                 </div>
 
             </div>

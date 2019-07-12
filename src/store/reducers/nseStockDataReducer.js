@@ -1,6 +1,7 @@
 
 const initState ={
-    data : []
+    data : [],
+    indiciesData : []
 }
 
 const nseStockDataReducer = (state = initState, action) =>
@@ -13,6 +14,13 @@ const nseStockDataReducer = (state = initState, action) =>
         return {
             ...state,
             data : action.nseData
+        }
+
+        case 'GET_INDICIES_STOCKSDATA':
+
+        return{
+            ...state,
+            indiciesData: action.nseData
         }
         default:
         return state;
