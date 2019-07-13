@@ -27,7 +27,7 @@ import Indices from '../portfolio/cards/Indices'
     }
     render() {
        
-        const {profile,portfolioStockList,nseStocks} =this.props
+        const {profile,portfolioStockList,nseStocks,filteredrecommendationList} =this.props
         
         return (
 
@@ -51,7 +51,7 @@ import Indices from '../portfolio/cards/Indices'
             </div>
             <div className="row">
                 <div className="col s12 m6 l6">
-                    <Topideas />
+                    <Topideas filteredrecommendationList={filteredrecommendationList} />
                 </div>
                 
             </div>
@@ -74,7 +74,6 @@ const mapStateToProps = (state) =>
         authState: state.firebase.auth,
         profile: state.firebase.profile,
         portfolioStockList: state.portfolio.filteredPortfolioStocks,
-        recommendationsList : state.recommendation.recommendations,
         filteredrecommendationList : state.recommendation.filteredRecommendations,
         nseStocks: state.nseData.data
     }

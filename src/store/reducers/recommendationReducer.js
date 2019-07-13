@@ -25,7 +25,11 @@ const recommendationReducer = (state = initState, action) =>
             return {
                 id : item.id,
                 stockCode : item.data.stockCode,
-                
+                stockName: item.data.value,
+                targetprice: item.data.targetprice,
+                recommendation: item.data.recommendation,
+                broker: item.data.broker,
+                date: item.data.date,
             }
         });
         return {

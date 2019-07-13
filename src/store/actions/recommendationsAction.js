@@ -37,9 +37,9 @@ export const addRecommendations = (input) =>
         const profile = getState().firebase.profile;
         const authorId = getState().firebase.auth.uid;
         const stocks = getStocks();
-        const stock= uderscore.findWhere(stocks,{name : input.value });
+        const stock= uderscore.findWhere(stocks,{stockName : input.value });
 
-        const stockCode= stock.abbr;
+        const stockCode= stock.stockCode;
        
         fireStore.collection('recommendations').add({
             stockName: input.value,

@@ -10,9 +10,9 @@ export const createPortfolioStock = (portfolio) =>
         const profile = getState().firebase.profile;
         const authorId = getState().firebase.auth.uid;
         const stocks = getStocks();
-        const stock= uderscore.findWhere(stocks,{name : portfolio.value });
+        const stock= uderscore.findWhere(stocks,{stockName : portfolio.value });
 
-        const stockCode= stock.abbr;
+        const stockCode= stock.stockCode;
        
         fireStore.collection('portfolios').add({
             stockName: portfolio.value,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getIndicesData } from '../../../store/actions/nseStockDataAction'
-import underscore from 'underscore'
+
  class Indices extends Component {
     constructor(props)
     {
@@ -33,7 +33,7 @@ import underscore from 'underscore'
                     <div className="col">
                     <p>{item.price.shortName}</p>
                     <p><span>{item.price.regularMarketPrice}</span> </p>
-                    <p><span>{Number.parseFloat(item.price.regularMarketChange).toFixed(2)}</span> <span>(+{Number.parseFloat(item.price.regularMarketChangePercent*100).toFixed(2)}%)</span></p>
+                    <p><span>{Number.parseFloat(item.price.regularMarketChange).toFixed(2)}</span> <span>({Number.parseFloat(item.price.regularMarketChangePercent*100).toFixed(2)}%)</span></p>
                     </div>
                 )
             }
