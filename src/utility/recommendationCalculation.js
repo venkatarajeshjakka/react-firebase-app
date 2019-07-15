@@ -2,10 +2,9 @@ const underScore = require('underscore');
 const lodash = require('lodash');
 
 let recommendationCalculation ={
-
-topRecommendation : function(filteredRecommendations)
+getrecommendations: function(filteredRecommendations)
 {
-        var groupedItems = underScore.groupBy(filteredRecommendations,'stockCode');
+    var groupedItems = underScore.groupBy(filteredRecommendations,'stockCode');
     
         var stockCodeArray = Object.keys(groupedItems);
         
@@ -19,12 +18,37 @@ topRecommendation : function(filteredRecommendations)
             var count = underScore.size(buyItems);
             var data = {
              stockCode : stockCode,
-                count : count
-                 }
+            count : count,
+            id: i}
             finalData.push(data);
          }
          var sortedList = underScore.sortBy(finalData, 'count')
          var sortByDesc = lodash.reverse(sortedList);
+
+         return sortByDesc;
+},
+topRecommendation : function(filteredRecommendations)
+{
+    var groupedItems = underScore.groupBy(filteredRecommendations,'stockCode');
+    
+    var stockCodeArray = Object.keys(groupedItems);
+    
+    var finalData = [];
+    for(var i=0; i<stockCodeArray.length; i++)
+    {
+        var individualItem =groupedItems[Object.keys(groupedItems)[i]];
+        var buyItems = underScore.where(individualItem, {recommendation:'Buy'})
+
+        var stockCode = Object.keys(groupedItems)[i];
+        var count = underScore.size(buyItems);
+        var data = {
+         stockCode : stockCode,
+        count : count,
+        id: i}
+        finalData.push(data);
+     }
+     var sortedList = underScore.sortBy(finalData, 'count')
+     var sortByDesc = lodash.reverse(sortedList);
          var countofItems = underScore.size(sortByDesc);
 
          return countofItems > 5 ? sortByDesc.slice(0,5):sortByDesc;

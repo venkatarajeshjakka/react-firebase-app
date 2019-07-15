@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Doughnut} from 'react-chartjs-2'
 import { topRecommendation, topIdeasBackgroundColor} from '../../../utility/recommendationCalculation';
 import underscore from 'underscore'
-
+import { NavLink } from 'react-router-dom'
 class Topideas extends Component {
 	constructor(props)
     {
@@ -52,6 +52,13 @@ class Topideas extends Component {
 				<div className="card">
 				
 				<Doughnut data={data} />
+				<div className="card-action">
+					<ul>
+						<li>
+						<NavLink to='/reco-summary'>View All</NavLink>
+						</li>
+					</ul>
+				</div>
 				</div>
 			)
 		}
