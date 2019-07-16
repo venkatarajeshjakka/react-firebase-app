@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { getrecommendations} from '../../utility/recommendationCalculation'
 import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css/dist/css/materialize.min.css";
+import { getRecommendations } from '../../store/actions/recommendationsAction'
+import underscore from 'underscore';
 class RecommendationSummary extends Component {
     constructor(props)
     {
@@ -11,13 +13,13 @@ class RecommendationSummary extends Component {
 			recommendations: [],
             loaded : false
         }
-        
+        //this.props.dispatch(getRecommendations());
 	}
     
     componentDidMount()
     { 
         var elems = document.querySelectorAll('.collapsible');
-         M.Collapsible.init(elems,{accordion: false});
+         M.Collapsible.init(elems,{accordion: true});
         
     }
 	updateState = () =>
@@ -27,14 +29,15 @@ class RecommendationSummary extends Component {
         {   
                 
             var data = getrecommendations(filteredrecommendationList);
+            data = underscore.filter(data, function(item){
+                return item.count > 0;
+            });
             if(this.state.loaded === false)
             {
                 this.setState({ recommendations : data,
 						  loaded: true,
                     });
-
             }
-            
         }
     }
     render() {
@@ -44,26 +47,31 @@ class RecommendationSummary extends Component {
         if(filteredrecommendationList && filteredrecommendationList.length > 1)
         {
             return (
+                <div className="container">
+                <h5 className="content center">Recommendations</h5>
                 <div className="row">
                     <ul className="collapsible" data-collapsible="expandable">
-                        <li>
-                            <div className="collapsible-header">
-                                First
-                            </div>
-                            <div className="collapsible-body">
-                                First Body
-                            </div>
-                        </li>
-                        <li>
-                            <div className="collapsible-header">
-                                Second
-                            </div>
-                            <div className="collapsible-body">
-                                Second Body
-                            </div>
-                        </li>
+                    {this.state.recommendations.map(
+                                item =>
+                                    {
+                                return(
+                                   
+                                        <li key={item.id}>
+                                        <div className="collapsible-header">
+                                        <p>{item.stockCode}</p> <span class="new badge">{item.count}</span>
+                                        </div>
+                                        <div className="collapsible-body">
+                                        {item.stockCode} here some content
+                                         </div>
+                                        </li>
+                                    
+                                  )
+                                 }
+                            )}
                     </ul>
                 </div>
+                </div>
+                
             )
         }
         else{
