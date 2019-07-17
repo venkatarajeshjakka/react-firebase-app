@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { getrecommendations} from '../../utility/recommendationCalculation'
 import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css/dist/css/materialize.min.css";
-import { getRecommendations } from '../../store/actions/recommendationsAction'
 import underscore from 'underscore';
 class RecommendationSummary extends Component {
     constructor(props)
@@ -20,7 +19,7 @@ class RecommendationSummary extends Component {
     { 
         var elems = document.querySelectorAll('.collapsible');
          M.Collapsible.init(elems,{accordion: true});
-        
+         this.updateState()
     }
 	updateState = () =>
     {
@@ -41,7 +40,7 @@ class RecommendationSummary extends Component {
         }
     }
     render() {
-        this.updateState()
+        
         const {filteredrecommendationList} =this.props;
         console.log(filteredrecommendationList);
         if(filteredrecommendationList && filteredrecommendationList.length > 1)
