@@ -42,7 +42,7 @@ class RecommendationSummary extends Component {
     render() {
         
         const {filteredrecommendationList} =this.props;
-        console.log(filteredrecommendationList);
+        
         if(filteredrecommendationList && filteredrecommendationList.length > 1)
         {
             return (
@@ -57,7 +57,7 @@ class RecommendationSummary extends Component {
                                    
                                         <li key={item.id}>
                                         <div className="collapsible-header">
-                                        <p>{item.stockCode}</p> <span class="new badge">{item.count}</span>
+                                        <p>{item.stockCode}</p> <span className="new badge">{item.count}</span>
                                         </div>
                                         <div className="collapsible-body">
                                         {item.stockCode} here some content

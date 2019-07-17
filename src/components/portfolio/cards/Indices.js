@@ -17,11 +17,10 @@ import { getIndicesData } from '../../../store/actions/nseStockDataAction'
         if(indiciesData && indiciesData.length >1)
         {
             return(
-                <div>
-            <div className="card-header">
-            <h5 className="card-header-title">#<span>Indices</span></h5>
-            </div>
+                
+            
                 <div className="card">
+
                     <div className="card-content">
                         
                         <div className="row">
@@ -41,7 +40,7 @@ import { getIndicesData } from '../../../store/actions/nseStockDataAction'
                         </div>
                     </div>
                 </div>
-            </div>
+           
             )           
         }
         return (

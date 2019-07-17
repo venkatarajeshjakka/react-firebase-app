@@ -1,5 +1,6 @@
 const underScore = require('underscore');
 var cal = require('./stockCalculation');
+const lodash =require('lodash');
 
 let utility ={
  grouped : function(input)
@@ -39,7 +40,31 @@ let utility ={
         finalData.push(data);
     }
     return finalData;
- }
+ },
 
+ filterRecommendation : function(filterRecommendation)
+ {
+    var groupedItems = underScore.groupBy(filterRecommendation,'stockCode');
+    
+    var stockCodeArray = Object.keys(groupedItems);
+    
+    var finalData = [];
+    for(var i=0; i<stockCodeArray.length; i++)
+    {
+        var individualItem =groupedItems[Object.keys(groupedItems)[i]];
+        var buyItems = underScore.where(individualItem, {recommendation:'Buy'})
+
+        var stockCode = Object.keys(groupedItems)[i];
+        var count = underScore.size(buyItems);
+        var data = {
+         stockCode : stockCode,
+        count : count,
+        id: i}
+        finalData.push(data);
+     }
+     var sortedList = underScore.sortBy(finalData, 'count')
+     return lodash.reverse(sortedList);
+
+ }
 }
 module.exports = utility;

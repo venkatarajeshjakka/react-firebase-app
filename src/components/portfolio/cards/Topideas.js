@@ -34,10 +34,13 @@ class Topideas extends Component {
             }
             
         }
-    }
+	}
+	componentDidMount()
+	{
+		this.updateState();
+	}
     render() {
-		this.updateState()
-
+		
 		if(this.state.loaded)
 		{
 			var data = {

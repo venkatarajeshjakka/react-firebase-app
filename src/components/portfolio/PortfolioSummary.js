@@ -14,47 +14,49 @@ import Indices from '../portfolio/cards/Indices'
     constructor(props)
     {
         super(props);
-       
-        this.props.dispatch(getRecommendations());
-        this.props.dispatch(getPortfolioStocks());
-        this.props.dispatch(getPortfolioStocksData());
     }
     componentDidMount()
     { 
         var elems = document.querySelectorAll('.fixed-action-btn');
         M.FloatingActionButton.init(elems, {direction:'top' ,hoverEnabled: true});
-        
+        this.callActions();
+    }
+
+    callActions = () =>
+    {
+        this.props.dispatch(getRecommendations());
+        this.props.dispatch(getPortfolioStocks());
+        this.props.dispatch(getPortfolioStocksData());
     }
     render() {
        
-        const {profile,portfolioStockList,nseStocks,filteredrecommendationList} =this.props
+        const {profile,filteredrecommendationList,portfolioStockList,nseStocks} =this.props
         
         return (
 
             <div className="container">`
-        <div className="content-hero-background">
-
-        </div>
-            <div className="content-hero-greeting">
-            <h5 className="content-hero-intro-title"> <span className="content-hero-intro-title-bold"> Hi,</span>{profile.firstName} {profile.lastName}</h5>
-            </div>
+            
+            <h5>  Hi,{profile.firstName} {profile.lastName}</h5>
             <div className="row">
-                <div className="col s12 m6 l4">
-                    <PortfolioCard portfolioStockList={portfolioStockList} nseStocks={nseStocks} />
+            <div className="col s12 m6 l5">
+                <div className="row">
+                     <PortfolioCard portfolioStockList={portfolioStockList} nseStocks={nseStocks} /> 
                 </div>
-                <div className="col s12 m6 l3">
-                    <div className="row">
-                        <Indices />
-                    </div>
-                </div>
-
-            </div>
-            <div className="row">
-                <div className="col s12 m6 l6">
-                    <Topideas filteredrecommendationList={filteredrecommendationList} />
+                <div className="row">
+                    <Topideas filteredrecommendationList={filteredrecommendationList} /> 
                 </div>
                 
             </div>
+            <div className="col s12 m6 l3">
+                <div className="row">
+                        <Indices />
+                </div>
+            </div>
+            </div>
+            
+            
+           
+            
             <div className="fixed-action-btn">
                 <a className="btn-floating btn-large red">
                     <i className="large material-icons">mode_edit</i>
@@ -73,8 +75,8 @@ const mapStateToProps = (state) =>
     return{
         authState: state.firebase.auth,
         profile: state.firebase.profile,
-        portfolioStockList: state.portfolio.filteredPortfolioStocks,
         filteredrecommendationList : state.recommendation.filteredRecommendations,
+        portfolioStockList: state.portfolio.filteredPortfolioStocks,
         nseStocks: state.nseData.data
     }
 }

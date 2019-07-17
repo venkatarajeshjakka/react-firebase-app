@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { portfolioCalculation } from '../../../utility/stockCalculation'
+
 class PortfolioCard extends Component {
     constructor(props)
     {
@@ -19,10 +20,10 @@ class PortfolioCard extends Component {
     updateState = () =>
     {
         const { nseStocks, portfolioStockList} =this.props;
-        if(nseStocks && nseStocks.length > 1 )
-        {   
-                
-            var data = portfolioCalculation(portfolioStockList,nseStocks);
+       
+        if(nseStocks && nseStocks.length > 0 )
+        { 
+             var data = portfolioCalculation(portfolioStockList,nseStocks);
             if(this.state.loaded === false)
             {
                 this.setState({ currentValue: data.currentValue,
@@ -38,18 +39,16 @@ class PortfolioCard extends Component {
             
         }
     }
+    
     render() {
- 
         this.updateState();
-        return (
-            <div>
-            <div className="card-header">
-            <h5 className="card-header-title">My <span>Portfolio</span></h5>
-            </div>
-        
+        const { nseStocks, portfolioStockList} =this.props; 
+        if(nseStocks && nseStocks.length > 0 && portfolioStockList && portfolioStockList.length > 0 )
+        {
+            return (
                 <div className="card">
                     <div className="card-content">
-                        
+                    
                         <div className="row">
                             <div className="col">
                                 <span>
@@ -78,14 +77,19 @@ class PortfolioCard extends Component {
                                 <p>{this.state.totalGain} ({this.state.gainPercentage}%)</p>
                             </div>
                         </div>
-
                     </div>
                     
                 </div>
-            </div>
-                
-           
         )
+        }
+        else{
+            return(
+                <div className="card">
+                    Loading..
+                </div>
+            )
+        }
+        
     }
 }
 
