@@ -4,7 +4,6 @@ import "materialize-css/dist/css/materialize.min.css";
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getRecommendations } from '../../store/actions/recommendationsAction'
-import { getPortfolioStocks } from '../../store/actions/portfolioAction'
 import Topideas from '../portfolio/cards/Topideas'
 import PortfolioCard from '../portfolio/cards/PortfolioCard'
 import { getPortfolioStocksData } from '../../store/actions/nseStockDataAction'
@@ -25,7 +24,6 @@ import Indices from '../portfolio/cards/Indices'
     callActions = () =>
     {
         this.props.dispatch(getRecommendations());
-        this.props.dispatch(getPortfolioStocks());
         this.props.dispatch(getPortfolioStocksData());
     }
     render() {
