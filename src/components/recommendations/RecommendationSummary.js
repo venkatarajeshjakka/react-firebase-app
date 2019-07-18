@@ -4,6 +4,7 @@ import { getrecommendations} from '../../utility/recommendationCalculation'
 import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css/dist/css/materialize.min.css";
 import underscore from 'underscore';
+import RecommendationBlock from './RecommendationBlock'
 class RecommendationSummary extends Component {
     constructor(props)
     {
@@ -53,6 +54,7 @@ class RecommendationSummary extends Component {
                     {this.state.recommendations.map(
                                 item =>
                                     {
+                                        var indiviudalData = underscore.where(filteredrecommendationList,{stockCode : item.stockCode});
                                 return(
                                    
                                         <li key={item.id}>
@@ -60,7 +62,7 @@ class RecommendationSummary extends Component {
                                         <p>{item.stockCode}</p> <span className="new badge">{item.count}</span>
                                         </div>
                                         <div className="collapsible-body">
-                                        {item.stockCode} here some content
+                                            < RecommendationBlock recommendationData= {indiviudalData} />
                                          </div>
                                         </li>
                                     

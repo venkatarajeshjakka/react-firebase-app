@@ -1,10 +1,31 @@
 import React from 'react'
 
- function RecommendationBlock(recommendations) {
+ const RecommendationBlock = (props)  =>{
+     const {recommendationData} = props;
+    
     return (
-        <div>
+        
+        <ul>
+        {recommendationData.map( item => {
             
-        </div>
+            return(
+                <li key={item.id} className="card">
+                    <div className="row">
+                        <div className="col">
+                            StockName : {item.stockName}
+                            
+                        </div>
+                        <div className="col">
+                            Target Price : {item.targetprice}
+                        </div>
+                        <div className="col">
+                            Broker Name : {item.broker}
+                        </div>
+                    </div>
+                </li>
+            )
+        })}
+        </ul>
     )
 }
 export default RecommendationBlock;

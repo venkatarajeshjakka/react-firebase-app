@@ -40,10 +40,11 @@ const recommendationReducer = (state = initState, action) =>
         case 'GET_RECOMMENDATION':
         const stocks= underscore.map(action.recommendationCollections, function(item)
         {
+            
             return {
                 id : item.id,
                 stockCode : item.data.stockCode,
-                stockName: item.data.value,
+                stockName: item.data.stockName,
                 targetprice: item.data.targetprice,
                 recommendation: item.data.recommendation,
                 broker: item.data.broker,
