@@ -37,16 +37,16 @@ import Indices from '../portfolio/cards/Indices'
             <h5>  Hi,{profile.firstName} {profile.lastName}</h5>
             <div className="row">
             <div className="col s12 m6 l5">
-                <div className="row">
+                <div>
                      <PortfolioCard portfolioStockList={portfolioStockList} nseStocks={nseStocks} /> 
                 </div>
-                <div className="row">
+                <div>
                     <Topideas filteredrecommendationList={filteredrecommendationList} /> 
                 </div>
                 
             </div>
-            <div className="col s12 m6 l3">
-                <div className="row">
+            <div className="col s12 m6 l4">
+                <div>
                         <Indices />
                 </div>
             </div>
