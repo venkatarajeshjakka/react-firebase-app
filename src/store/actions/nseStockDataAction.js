@@ -6,7 +6,8 @@ export const getPortfolioStocksData = () =>
 {
     return (dispatch, getState, { getFirebase, getFirestore }) =>
     {
-        const portfolioStocksCollection = [];
+        var StocksCollection = [];
+        var portfolioStocksCollection = [];
         const fireStore = getFirestore();
         const authorId = getState().firebase.auth.uid;
         let stockCode ='';
@@ -15,21 +16,29 @@ export const getPortfolioStocksData = () =>
         {
         querysnapshot.docs.map(doc =>
         {
-            const documentValue = doc.data();
+           
+            const documentValue = 
+            {
+                id: doc.id,
+                data: doc.data()
+            }
+            portfolioStocksCollection.push(documentValue);
 
-            var stockCodeValue = documentValue.stockCode;
+            var stockCodeValue = documentValue.data.stockCode;
             if(underscore.contains(portfolioStocksCollection,stockCodeValue) === false)
             {
-                portfolioStocksCollection.push(stockCodeValue);
+                StocksCollection.push(stockCodeValue);
             }
+           
             
         });
-        var modifiedCollection = underscore.map(portfolioStocksCollection, function(val)
+        var modifiedCollection = underscore.map(StocksCollection, function(val)
         {
             return val+'.NS';
-        })
-        stockCode = modifiedCollection.join();
+        });
         
+        dispatch({type: 'GET_PORTFOLIOSTOCKS', portfolioStocksCollection});
+        stockCode = modifiedCollection.join();
        }).then( res =>
         {
             const baseUrl= `https://rajesh-nse-data.herokuapp.com/api/get-nse-stocks?stockCode=${stockCode}`;

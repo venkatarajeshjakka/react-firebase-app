@@ -67,7 +67,7 @@ import { addRecommendations } from '../../store/actions/recommendationsAction'
                         inputProps={{ id: 'stock' ,placeholder: 'Add Stock...' }}
                         wrapperStyle={{ position: 'relative', display: 'inline-block', padding: 10 }}
                         items={ getStocks() }
-                        getItemValue={ item => item.name }
+                        getItemValue={ item => item.stockName }
                         shouldItemRender={ matchStocks }
                         onChange={(event, value) => this.setState({ value }) }
                         onSelect={ value => this.setState({ value }) }
@@ -83,8 +83,8 @@ import { addRecommendations } from '../../store/actions/recommendationsAction'
                     renderItem={ (item, isHighlighted) => (
                      <div
                        className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
-                         key={ item.abbr } >
-                        { item.name }
+                         key={ item.stockCode } >
+                        { item.stockName }
                     </div>
                        )}
                     />

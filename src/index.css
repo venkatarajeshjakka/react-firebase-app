@@ -101,51 +101,6 @@ textarea.materialize-textarea:focus:not([readonly])
   margin-top: 0rem;
 }
 
-.content-hero-intro-title
-{
-  
-  color: #fff;
-  font-weight: 300;
-  line-height: 1;
-  font-family: CWC, Arial, sans-serif;
-}
-
-.content-hero-intro-title-bold
-{
-  font-weight: 600;
-  text-transform: capitalize
-}
-.content-hero-greeting
-{
-  position: relative;
-  overflow: hidden;
-  transition: opacity .4s ease;
-  padding-top: 1rem;
-}
-
-.card-header
-{
-  position: relative;
-  -ms-flex-align: end;
-  align-items: flex-end;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.card-header-title
-{
-    color: #ff1e50;
-    text-shadow: 0 2px 5px rgba(0,0,0,.4);
-    text-transform: uppercase;
-    text-decoration: none;
-}
-
-.card-header-title span
-{
-  color: white;
-}
-
 @media only screen and (min-width: 993px)
 {
   .container {

@@ -58,7 +58,7 @@ import { createPortfolioStock } from '../../store/actions/portfolioAction'
                         inputProps={{ id: 'stock' ,placeholder: 'Add Stock...' }}
                         wrapperStyle={{ position: 'relative', display: 'inline-block', padding: 10 }}
                         items={ getStocks() }
-                        getItemValue={ item => item.name }
+                        getItemValue={ item => item.stockName }
                         shouldItemRender={ matchStocks }
                         onChange={(event, value) => this.setState({ value }) }
                         onSelect={ value => this.setState({ value }) }
@@ -74,8 +74,8 @@ import { createPortfolioStock } from '../../store/actions/portfolioAction'
                     renderItem={ (item, isHighlighted) => (
                      <div
                        className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
-                         key={ item.abbr } >
-                        { item.name }
+                         key={ item.stockCode } >
+                        { item.stockName }
                     </div>
                        )}
                     />

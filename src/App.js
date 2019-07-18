@@ -9,6 +9,7 @@ import CreateProject from './components/projects/CreateProject'
 import AddStock from './components/portfolio/AddPortfolioStock'
 import Portfolio from './components/portfolio/PortfolioSummary'
 import AddReco from './components/portfolio/AddRecommendations'
+import RecommendationSummary from './components/recommendations/RecommendationSummary'
 class  App extends Component {
   render()
   {
@@ -25,6 +26,7 @@ class  App extends Component {
           <Route path='/add-stock' component={AddStock} />
           <Route path='/portfolio' component={Portfolio} />
           <Route path='/add-reco' component={AddReco} />
+          <Route path='/reco-summary' component={RecommendationSummary} />
         </Switch>
         </div>
       </BrowserRouter>
