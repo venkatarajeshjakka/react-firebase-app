@@ -1,4 +1,4 @@
-
+import { getPersistantState,setPersistantState, updatePersistantState} from '../../utility/sessionStorage'
 const initState ={
     data : [],
     indiciesData : []
@@ -10,7 +10,7 @@ const nseStockDataReducer = (state = initState, action) =>
     {
        
         case 'GET_PORTFOLIOSTOCKSDATA':
-        
+        setPersistantState('nsedata', action.nseData);
         return {
             ...state,
             data : action.nseData
@@ -22,8 +22,18 @@ const nseStockDataReducer = (state = initState, action) =>
             ...state,
             indiciesData: action.nseData
         }
+        case 'UPDATE_PORTFOLIOSTOCKSDATA':
+        updatePersistantState('nsedata',action.finalData);
+        return{
+            ...state,
+            data : action.finalData
+        }
         default:
-        return state;
+        var persistedData = getPersistantState('nsedata');
+        return {
+            ...state,
+            data : persistedData
+        }
     }
    
 }

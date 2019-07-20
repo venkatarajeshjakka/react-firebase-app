@@ -1,30 +1,12 @@
 import underscore from 'underscore'
-
+import { getPersistantState,setPersistantState} from '../../utility/sessionStorage'
 const initState ={
 
     recommendations: [],
     loading: false,
     filteredRecommendations: []
 }
-var setPersistantState = (key,value) =>
-{
-    if(!sessionStorage.getItem(key))
-    {
-        sessionStorage.setItem(key,JSON.stringify(value));
-    }
-}
 
-var getPersistantState = (key) =>
-{
-    if(sessionStorage.getItem(key))
-    {
-        var parsedData = JSON.parse(sessionStorage.getItem(key));
-        return parsedData;
-    }else
-    {
-        return null;
-    }
-}
 const recommendationReducer = (state = initState, action) =>
 {
     switch(action.type)

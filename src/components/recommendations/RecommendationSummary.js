@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getrecommendations} from '../../utility/recommendationCalculation'
+import { getNsedata } from '../../store/actions/nseStockDataAction'
 import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css/dist/css/materialize.min.css";
 import underscore from 'underscore';
@@ -22,10 +23,30 @@ class RecommendationSummary extends Component {
          M.Collapsible.init(elems,{accordion: true});
          this.updateState()
     }
+
+   
+
+    validateData = (recommendationData) =>
+    {
+        const {nseStocks} =this.props;
+        if(nseStocks && nseStocks.length >0)
+        {
+            var recommendationStockCodeArray = underscore.pluck(recommendationData,'stockCode');
+            var nseStockCodeArray = underscore.pluck(nseStocks,'stockCode');
+            var stockArray = underscore.filter(recommendationStockCodeArray,function(item)
+            {
+                if(!underscore.contains(nseStockCodeArray, item))
+                {
+                    return item;
+                }
+            });
+            this.props.getNsedata(stockArray);
+        }
+    }
 	updateState = () =>
     {
         const { filteredrecommendationList } =this.props;
-        if(filteredrecommendationList && filteredrecommendationList.length > 1 )
+        if(filteredrecommendationList && filteredrecommendationList.length > 0 )
         {   
                 
             var data = getrecommendations(filteredrecommendationList);
@@ -38,11 +59,14 @@ class RecommendationSummary extends Component {
 						  loaded: true,
                     });
             }
+
+            this.validateData(data);
         }
+
     }
     render() {
         
-        const {filteredrecommendationList} =this.props;
+        const {filteredrecommendationList,nseStocks} =this.props;
         
         if(filteredrecommendationList && filteredrecommendationList.length > 1)
         {
@@ -55,6 +79,7 @@ class RecommendationSummary extends Component {
                                 item =>
                                     {
                                         var indiviudalData = underscore.where(filteredrecommendationList,{stockCode : item.stockCode});
+                                        
                                 return(
                                    
                                         <li key={item.id}>
@@ -62,7 +87,7 @@ class RecommendationSummary extends Component {
                                         <p>{item.stockCode}</p> <span className="new badge">{item.count}</span>
                                         </div>
                                         <div className="collapsible-body">
-                                            < RecommendationBlock recommendationData= {indiviudalData} />
+                                            < RecommendationBlock recommendationData= {indiviudalData} nsedata={nseStocks}/>
                                          </div>
                                         </li>
                                     
@@ -94,5 +119,12 @@ const mapStateToProps = (state) =>
         nseStocks: state.nseData.data
     }
 }
-export default connect(mapStateToProps, null)(RecommendationSummary);
+
+const mapDispatchToProps = (dispatch) =>
+{
+    return{
+      getNsedata: (stockCodeArray) => dispatch(getNsedata(stockCodeArray))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(RecommendationSummary);
 
