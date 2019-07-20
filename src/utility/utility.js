@@ -62,8 +62,6 @@ let utility ={
         count : count,
         id: i,
         stockName : firstItem.stockName}
-
-        console.log(data);
         finalData.push(data);
      }
      var sortedList = underScore.sortBy(finalData, 'count')
