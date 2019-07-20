@@ -14,7 +14,6 @@ class RecommendationSummary extends Component {
 			recommendations: [],
             loaded : false
         }
-        //this.props.dispatch(getRecommendations());
 	}
     
     componentDidMount()
@@ -40,7 +39,7 @@ class RecommendationSummary extends Component {
                     return item;
                 }
             });
-            
+
             if(stockArray && stockArray.length >0)
             {
                 this.props.getNsedata(stockArray);
@@ -106,8 +105,8 @@ class RecommendationSummary extends Component {
         }
         else{
             return(
-                <div>
-                    Loading..
+                <div className="card">
+                    Loading ...
                 </div>
             )
         }

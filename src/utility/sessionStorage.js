@@ -33,3 +33,11 @@ export const hasPersistantState = (key) =>
     return sessionStorage.getItem(key) ? true : false;
 }
 
+export const clearPersistantState = (key) =>
+{
+    if(sessionStorage.getItem(key))
+    {   
+        sessionStorage.removeItem(key);
+    }
+}
+
