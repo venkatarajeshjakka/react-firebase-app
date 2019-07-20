@@ -58,6 +58,32 @@ export const getPortfolioStocksData = () =>
     }
 };
 
+export const getNsedata = (stockCodeArray) =>
+{
+    return (dispatch, getState) =>
+    {
+       var previouseNseData = getState().nseData.data;
+       console.log('previous Data', previouseNseData);
+       var modifiedCollection = underscore.map(stockCodeArray, function(val)
+       {
+           return val+'.NS';
+       });
+       let stockCode = modifiedCollection.join();
+       const baseUrl= `https://rajesh-nse-data.herokuapp.com/api/get-nse-stocks?stockCode=${stockCode}`;
+
+         axios.get(baseUrl).then( response => 
+        {
+            let stocks = response.data;
+            var nseData = nseStockMapping(stocks);
+            var finalData = underscore.union(previouseNseData,nseData);
+            dispatch({type: 'UPDATE_PORTFOLIOSTOCKSDATA', finalData})
+        }).catch( err => {
+                console.log(err);
+        }
+        );
+    }
+};
+
 export const getIndicesData = () =>
 {
     return (dispatch, getState) =>

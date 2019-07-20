@@ -55,11 +55,13 @@ let utility ={
         var buyItems = underScore.where(individualItem, {recommendation:'Buy'})
 
         var stockCode = Object.keys(groupedItems)[i];
+        var firstItem = underScore.first(individualItem);
         var count = underScore.size(buyItems);
         var data = {
          stockCode : stockCode,
         count : count,
-        id: i}
+        id: i,
+        stockName : firstItem.stockName}
         finalData.push(data);
      }
      var sortedList = underScore.sortBy(finalData, 'count')

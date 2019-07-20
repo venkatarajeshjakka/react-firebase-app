@@ -1,7 +1,8 @@
-
+import {setPersistantState} from '../../utility/sessionStorage'
 const initState ={
     data : [],
-    indiciesData : []
+    indiciesData : [],
+    recommendationStockData : []
 }
 
 const nseStockDataReducer = (state = initState, action) =>
@@ -21,6 +22,13 @@ const nseStockDataReducer = (state = initState, action) =>
         return{
             ...state,
             indiciesData: action.nseData
+        }
+
+        case 'UPDATE_PORTFOLIOSTOCKSDATA' :
+        setPersistantState('nseStockData',action.finalData)
+        return{
+            ...state,
+            recommendationStockData : action.finalData
         }
         default:
         return state;
