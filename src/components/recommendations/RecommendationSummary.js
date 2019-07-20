@@ -40,7 +40,11 @@ class RecommendationSummary extends Component {
                     return item;
                 }
             });
-            this.props.getNsedata(stockArray);
+            
+            if(stockArray && stockArray.length >0)
+            {
+                this.props.getNsedata(stockArray);
+            }     
         }
     }
 	updateState = () =>
