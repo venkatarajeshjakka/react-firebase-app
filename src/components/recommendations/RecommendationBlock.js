@@ -1,7 +1,7 @@
 import React from 'react'
-
+import { targetPotential } from '../../utility/recommendationCalculation'
  const RecommendationBlock = (props)  =>{
-     const {recommendationData} = props;
+     const {recommendationData,nseData} = props;
     
     return (
         
@@ -20,6 +20,9 @@ import React from 'react'
                         </div>
                         <div className="col">
                             Broker Name : {item.broker}
+                        </div>
+                        <div className="col">
+                            Potential : {targetPotential(nseData.price.regularMarketPrice,item.targetprice)}
                         </div>
                     </div>
                 </li>

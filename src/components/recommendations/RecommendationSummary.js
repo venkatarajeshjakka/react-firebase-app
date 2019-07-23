@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getrecommendations} from '../../utility/recommendationCalculation'
+import { getrecommendations, targetRange, targetRangeText} from '../../utility/recommendationCalculation'
 import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css/dist/css/materialize.min.css";
 import underscore from 'underscore';
@@ -37,8 +37,8 @@ class RecommendationSummary extends Component {
                     return item;
                 }
             });
-
-             if(stockArray && stockArray.length >0 && !this.props.recommendationStockData)
+           
+             if(stockArray && stockArray.length >0)
             {
                 this.props.getNsedata(stockArray);
             }     
@@ -60,13 +60,14 @@ class RecommendationSummary extends Component {
 						  loaded: true,
                     });
             }
+            
             this.validateData(data);
         }
     }
     render() {
         
         const {filteredrecommendationList,recommendationStockData} =this.props;
-        
+       
         if(filteredrecommendationList && filteredrecommendationList.length > 0 && recommendationStockData && recommendationStockData.length >0)
         {
             return (
@@ -80,6 +81,8 @@ class RecommendationSummary extends Component {
                                         var stockData = underscore.findWhere(recommendationStockData,{stockCode : item.stockCode});
                                         
                                         var indiviudalData = underscore.where(filteredrecommendationList,{stockCode : item.stockCode});
+                                         var targetRangeData = targetRange(stockData.price.regularMarketPrice,indiviudalData)
+                                         
                                 return(
                                    
                                         <li key={item.id}>
@@ -95,7 +98,9 @@ class RecommendationSummary extends Component {
                                                     <div className="col center-align">
                                                     Change :{Number.parseFloat(stockData.price.regularMarketChange).toFixed(2)} <span>({Number.parseFloat(stockData.price.regularMarketChangePercent*100).toFixed(2)}%)</span>
                                                     </div>
-                                                    
+                                                    <div className="col center-align">
+                                                        Target Range: {targetRangeText(targetRangeData.minValue.targetprice,targetRangeData.maxValue.targetprice)}
+                                                    </div>
                                                     <div className="col center-align">
                                                     <span className="new badge">{item.count}</span>
                                                     </div>
