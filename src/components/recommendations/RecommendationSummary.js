@@ -5,6 +5,7 @@ import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css/dist/css/materialize.min.css";
 import underscore from 'underscore';
 import RecommendationBlock from './RecommendationBlock'
+import { getNsedata } from '../../store/actions/nseStockDataAction'
 class RecommendationSummary extends Component {
     constructor(props)
     {
@@ -22,10 +23,31 @@ class RecommendationSummary extends Component {
          M.Collapsible.init(elems,{accordion: true});
          this.updateState()
     }
+    validateData = (recommendationData) =>
+    {
+        const {nseStocks} =this.props;
+        if(nseStocks && nseStocks.length >0)
+        {
+            var recommendationStockCodeArray = underscore.pluck(recommendationData,'stockCode');
+            var nseStockCodeArray = underscore.pluck(nseStocks,'stockCode');
+            var stockArray = underscore.filter(recommendationStockCodeArray,function(item)
+            {
+                if(!underscore.contains(nseStockCodeArray, item))
+                {
+                    return item;
+                }
+            });
+
+             if(stockArray && stockArray.length >0 && !this.props.recommendationStockData)
+            {
+                this.props.getNsedata(stockArray);
+            }     
+        }
+    }
 	updateState = () =>
     {
         const { filteredrecommendationList } =this.props;
-        if(filteredrecommendationList && filteredrecommendationList.length > 1 )
+        if(filteredrecommendationList && filteredrecommendationList.length > 0 )
         {   
                 
             var data = getrecommendations(filteredrecommendationList);
@@ -38,13 +60,14 @@ class RecommendationSummary extends Component {
 						  loaded: true,
                     });
             }
+            this.validateData(data);
         }
     }
     render() {
         
-        const {filteredrecommendationList} =this.props;
+        const {filteredrecommendationList,recommendationStockData} =this.props;
         
-        if(filteredrecommendationList && filteredrecommendationList.length > 1)
+        if(filteredrecommendationList && filteredrecommendationList.length > 0 && recommendationStockData && recommendationStockData.length >0)
         {
             return (
                 <div className="container">
@@ -54,15 +77,34 @@ class RecommendationSummary extends Component {
                     {this.state.recommendations.map(
                                 item =>
                                     {
+                                        var stockData = underscore.findWhere(recommendationStockData,{stockCode : item.stockCode});
+                                        
                                         var indiviudalData = underscore.where(filteredrecommendationList,{stockCode : item.stockCode});
                                 return(
                                    
                                         <li key={item.id}>
                                         <div className="collapsible-header">
-                                        <p>{item.stockCode}</p> <span className="new badge">{item.count}</span>
+                                            <div>
+                                                <div className="row">
+                                                    <div className="col center-align">
+                                                    {item.stockName}
+                                                    </div>
+                                                    <div className="col center-align">
+                                                    Last Price (in Rs) :{stockData.price.regularMarketPrice}
+                                                    </div>
+                                                    <div className="col center-align">
+                                                    Change :{Number.parseFloat(stockData.price.regularMarketChange).toFixed(2)} <span>({Number.parseFloat(stockData.price.regularMarketChangePercent*100).toFixed(2)}%)</span>
+                                                    </div>
+                                                    
+                                                    <div className="col center-align">
+                                                    <span className="new badge">{item.count}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                       
                                         </div>
                                         <div className="collapsible-body">
-                                            < RecommendationBlock recommendationData= {indiviudalData} />
+                                            < RecommendationBlock recommendationData= {indiviudalData} nseData={stockData} />
                                          </div>
                                         </li>
                                     
@@ -77,7 +119,7 @@ class RecommendationSummary extends Component {
         }
         else{
             return(
-                <div>
+                <div className="card">
                     Loading..
                 </div>
             )
@@ -91,8 +133,15 @@ const mapStateToProps = (state) =>
     return{
         authState: state.firebase.auth,
         filteredrecommendationList : state.recommendation.filteredRecommendations,
-        nseStocks: state.nseData.data
+        nseStocks: state.nseData.data,
+        recommendationStockData : state.nseData.recommendationStockData
     }
 }
-export default connect(mapStateToProps, null)(RecommendationSummary);
+const mapDispatchToProps = (dispatch) =>
+{
+    return{
+      getNsedata: (stockCodeArray) => dispatch(getNsedata(stockCodeArray))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(RecommendationSummary);
 

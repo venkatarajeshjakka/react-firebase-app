@@ -1,4 +1,4 @@
-import {setPersistantState} from '../../utility/sessionStorage'
+import {setPersistantState,getPersistantState} from '../../utility/sessionStorage'
 const initState ={
     data : [],
     indiciesData : [],
@@ -31,6 +31,14 @@ const nseStockDataReducer = (state = initState, action) =>
             recommendationStockData : action.finalData
         }
         default:
+        var persistedData = getPersistantState('nseStockData');
+        if(persistedData !=null)
+        {
+            return {
+                ...state,
+                recommendationStockData : persistedData
+            }
+        }  
         return state;
     }
    
