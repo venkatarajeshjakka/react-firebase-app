@@ -63,7 +63,7 @@ export const getNsedata = (stockCodeArray) =>
     return (dispatch, getState) =>
     {
        var previouseNseData = getState().nseData.data;
-       console.log('previous Data', previouseNseData);
+       
        var modifiedCollection = underscore.map(stockCodeArray, function(val)
        {
            return val+'.NS';
