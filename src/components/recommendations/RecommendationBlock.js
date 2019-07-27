@@ -5,11 +5,11 @@ import { targetPotential } from '../../utility/recommendationCalculation'
     
     return (
         
-        <ul>
+        <ul className="collection">
         {recommendationData.map( item => {
             
             return(
-                <li key={item.id} className="card">
+                <li key={item.id} className="collection-item">
                     <div className="row">
                         <div className="col">
                             StockName : {item.stockName}
