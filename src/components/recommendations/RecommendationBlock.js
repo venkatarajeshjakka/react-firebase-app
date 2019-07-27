@@ -1,11 +1,12 @@
 import React from 'react'
-import { targetPotential } from '../../utility/recommendationCalculation'
+import { targetPotential ,filterWithDate} from '../../utility/recommendationCalculation'
 import { NavLink } from 'react-router-dom'
 import moment from 'moment'
 
  const RecommendationBlock = (props)  =>{
      const {recommendationData,nseData} = props;
-    var response = recommendationData.length > 5 ? recommendationData.slice(0,5) :recommendationData;
+     var sortedResponse = filterWithDate(recommendationData);
+    var response = sortedResponse.length > 5 ? sortedResponse.slice(0,5) :sortedResponse;
     
     return (
         
@@ -15,12 +16,13 @@ import moment from 'moment'
             return(
                 <li key={item.id} className="collection-item">
                     <div className="row">
-                        <div className="col">
-                            StockName : {item.stockName}
-                            
-                        </div>
+                        
                         <div className="col">
                             Target Price : {item.targetprice}
+                        </div>
+                        <div className="col">
+                            
+                            Date : {moment(item.date,"YYYYMMDD").format('ll')}
                         </div>
                         <div className="col">
                             Broker Name : {item.broker}
@@ -28,9 +30,7 @@ import moment from 'moment'
                         <div className="col">
                             Potential : {targetPotential(nseData.price.regularMarketPrice,item.targetprice)}
                         </div>
-                        <div className="col">
-                            Date : {moment(new Date(item.date.seconds*1000),"YYYYMMDD").format('ll')}
-                        </div>
+                        
                     </div>
                 </li>
             )

@@ -1,5 +1,5 @@
 const underScore = require('underscore');
-
+const loadash = require('lodash')
 const utility = require('./utility')
 
 let recommendationCalculation ={
@@ -68,6 +68,11 @@ targetPotential : function(currentprice,targetPrice)
     {
         return 'Target Hit';
     }
+},
+filterWithDate : function(recommendationArray)
+{
+    var sortbyValues = underScore.sortBy(recommendationArray,'date')
+    return loadash.reverse(sortbyValues)
 }
 
 }

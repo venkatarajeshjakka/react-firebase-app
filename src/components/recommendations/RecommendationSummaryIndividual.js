@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import underscore from 'underscore'
-import { targetPotential } from '../../utility/recommendationCalculation'
+import { targetPotential, filterWithDate } from '../../utility/recommendationCalculation'
 import moment from 'moment'
 class RecommendationSummaryIndividual extends Component {
     render() {
         const {filteredrecommendationList,recommendationStockData,stockCode} =this.props;
         var stockData = underscore.findWhere(recommendationStockData,{stockCode : stockCode});
-        console.log(stockData);
         
+        var response= filterWithDate(filteredrecommendationList);
        
         return (
             <div className="container">
@@ -23,7 +23,7 @@ class RecommendationSummaryIndividual extends Component {
             <ul className="collection">
                 
                 {
-                    filteredrecommendationList.map( item => {
+                    response.map( item => {
                         return(
                                 <li key={item.id} className="collection-item">
                                     <div className="row">
@@ -34,12 +34,17 @@ class RecommendationSummaryIndividual extends Component {
                                             Target Price : {item.targetprice}
                                          </div>
                                             <div className="col">
+                            
+                                             Date : {moment(item.date,"YYYYMMDD").format('ll')}
+                                            </div>
+                                            <div className="col">
                                             Broker Name : {item.broker}
                                             </div>
                                             <div className="col">
                                                 Potential : {targetPotential(stockData.price.regularMarketPrice,item.targetprice)}
                                              </div>
-                                            </div>
+                                            
+                                        </div>
                                     </li>
                                 )
                             })
