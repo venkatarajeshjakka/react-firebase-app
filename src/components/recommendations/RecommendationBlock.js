@@ -1,12 +1,13 @@
 import React from 'react'
 import { targetPotential } from '../../utility/recommendationCalculation'
+import { NavLink } from 'react-router-dom'
  const RecommendationBlock = (props)  =>{
      const {recommendationData,nseData} = props;
-    
+    var response = recommendationData.length > 5 ? recommendationData.slice(0,5) :recommendationData;
     return (
         
         <ul className="collection">
-        {recommendationData.map( item => {
+        {response.map( item => {
             
             return(
                 <li key={item.id} className="collection-item">
@@ -28,6 +29,9 @@ import { targetPotential } from '../../utility/recommendationCalculation'
                 </li>
             )
         })}
+        <li className='collection-item center'>
+        <NavLink to={'/reco-summary-individual/'+recommendationData[0].stockCode} className=''>View More</NavLink>
+        </li>
         </ul>
     )
 }
