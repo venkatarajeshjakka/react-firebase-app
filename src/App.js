@@ -10,6 +10,7 @@ import AddStock from './components/portfolio/AddPortfolioStock'
 import Portfolio from './components/portfolio/PortfolioSummary'
 import AddReco from './components/portfolio/AddRecommendations'
 import RecommendationSummary from './components/recommendations/RecommendationSummary'
+import RecommendationSummaryIndividual from './components/recommendations/RecommendationSummaryIndividual'
 class  App extends Component {
   render()
   {
@@ -27,6 +28,7 @@ class  App extends Component {
           <Route path='/portfolio' component={Portfolio} />
           <Route path='/add-reco' component={AddReco} />
           <Route path='/reco-summary' component={RecommendationSummary} />
+          <Route path='/reco-summary-individual/:stockCode' component={RecommendationSummaryIndividual} />
         </Switch>
         </div>
       </BrowserRouter>

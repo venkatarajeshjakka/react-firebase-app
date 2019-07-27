@@ -38,7 +38,31 @@ code {
   margin-right: 5%;
   float: right;
 }
+.big-font
+{
+  font-size: xx-large;
+  margin: 1.0933333333rem 0 .656rem 0;
+}
 
+.top-margin
+{
+  margin-top: 5%;
+}
+.span-left-margin
+{
+  margin-left: 2%;
+}
+
+.zero-top-margin
+{
+  margin-top: 0% !important;
+}
+span.h5
+{
+  font-size: 1.64rem;
+  line-height: 110%;
+  margin: 1.0933333333rem 0 .656rem 0;
+}
 nav ul a.btn, nav ul a.btn-large, nav ul a.btn-small, nav ul a.btn-large, nav ul a.btn-flat, nav ul a.btn-floating {
   margin-top: 10px;
   margin-left: 15px;

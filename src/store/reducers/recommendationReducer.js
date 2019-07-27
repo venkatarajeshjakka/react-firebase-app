@@ -1,5 +1,6 @@
 import underscore from 'underscore'
 import {setPersistantState, getPersistantState} from '../../utility/sessionStorage'
+
 const initState ={
 
     recommendations: [],
@@ -22,7 +23,7 @@ const recommendationReducer = (state = initState, action) =>
         case 'GET_RECOMMENDATION':
         const stocks= underscore.map(action.recommendationCollections, function(item)
         {
-            
+           
             return {
                 id : item.id,
                 stockCode : item.data.stockCode,
@@ -30,7 +31,7 @@ const recommendationReducer = (state = initState, action) =>
                 targetprice: item.data.targetprice,
                 recommendation: item.data.recommendation,
                 broker: item.data.broker,
-                date: item.data.date,
+                date: new Date(item.data.date.seconds*1000),
             }
         });
         setPersistantState('recommendations', stocks);
