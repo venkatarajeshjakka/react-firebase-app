@@ -1,9 +1,12 @@
 import React from 'react'
 import { targetPotential } from '../../utility/recommendationCalculation'
 import { NavLink } from 'react-router-dom'
+import moment from 'moment'
+
  const RecommendationBlock = (props)  =>{
      const {recommendationData,nseData} = props;
     var response = recommendationData.length > 5 ? recommendationData.slice(0,5) :recommendationData;
+    
     return (
         
         <ul className="collection">
@@ -24,6 +27,9 @@ import { NavLink } from 'react-router-dom'
                         </div>
                         <div className="col">
                             Potential : {targetPotential(nseData.price.regularMarketPrice,item.targetprice)}
+                        </div>
+                        <div className="col">
+                            Date : {moment(new Date(item.date.seconds*1000),"YYYYMMDD").format('ll')}
                         </div>
                     </div>
                 </li>
