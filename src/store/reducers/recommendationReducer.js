@@ -6,7 +6,8 @@ const initState ={
     recommendations: [],
     loading: false,
     filteredRecommendations: [],
-    addedNewRecommendation: false
+    addedNewRecommendation: false,
+    isSuccess :false
 }
 
 const recommendationReducer = (state = initState, action) =>
@@ -44,7 +45,8 @@ const recommendationReducer = (state = initState, action) =>
             loading : true,
             recommendations : action.recommendationCollections,
             filteredRecommendations : stocks,
-            addedNewRecommendation : false
+            addedNewRecommendation : false,
+            isSuccess : true
         }
         default:
         var persistedData = getPersistantState('recommendations');

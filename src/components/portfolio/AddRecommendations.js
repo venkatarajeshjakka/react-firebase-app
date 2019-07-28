@@ -68,6 +68,7 @@ import underscore from 'underscore'
           else
           {
             this.props.addRecommendations(this.state)
+            
             this.props.history.push('/portfolio');
           } 
      }
@@ -79,7 +80,7 @@ import underscore from 'underscore'
             <div style={this.state.showwarning ? {} : { display: 'none' }}>
               <div className="card yellow darken-2 center">
                 <div className="card-content white-text darken-3">
-                  <span><i class="material-icons">warning</i></span><span> Oh! Recommendation is already added</span>
+                  <span><i className="material-icons">warning</i></span><span> Oh! Recommendation is already added</span>
                 </div>
               </div>
             </div>
@@ -163,6 +164,7 @@ const mapStateToProps = (state) =>
         
         authState: state.firebase.auth,
         filteredrecommendationList : state.recommendation.filteredRecommendations,
+        
     }
 }
 const mapDispatchToProps = (dispatch) =>

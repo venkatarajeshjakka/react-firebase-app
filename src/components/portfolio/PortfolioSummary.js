@@ -74,7 +74,6 @@ const mapStateToProps = (state) =>
         filteredrecommendationList : state.recommendation.filteredRecommendations,
         portfolioStockList: state.portfolio.filteredPortfolioStocks,
         nseStocks: state.nseData.data,
-        addedNewRecommendation : state.recommendation.addedNewRecommendation
     }
 }
 export default connect(mapStateToProps, null)(PortfolioSummary);
