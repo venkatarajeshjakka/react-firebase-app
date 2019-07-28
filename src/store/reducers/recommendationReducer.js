@@ -5,7 +5,8 @@ const initState ={
 
     recommendations: [],
     loading: false,
-    filteredRecommendations: []
+    filteredRecommendations: [],
+    addedNewRecommendation: false
 }
 
 const recommendationReducer = (state = initState, action) =>
@@ -14,7 +15,10 @@ const recommendationReducer = (state = initState, action) =>
     {
         case 'CREATE_RECOMMENDATION':
         console.log('Added recommendation', action.input)
-        return state;
+        return {
+            ...state,
+            addedNewRecommendation:true
+        };
 
         case 'CREAT_RECOMMENDATION_ERROR':
         console.log('add recommendation error', action.err);
@@ -39,7 +43,8 @@ const recommendationReducer = (state = initState, action) =>
             ...state,
             loading : true,
             recommendations : action.recommendationCollections,
-            filteredRecommendations : stocks
+            filteredRecommendations : stocks,
+            addedNewRecommendation : false
         }
         default:
         var persistedData = getPersistantState('recommendations');

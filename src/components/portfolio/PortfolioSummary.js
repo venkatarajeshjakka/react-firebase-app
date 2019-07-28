@@ -18,6 +18,8 @@ import Indices from '../portfolio/cards/Indices'
     { 
         var elems = document.querySelectorAll('.fixed-action-btn');
         M.FloatingActionButton.init(elems, {direction:'top' ,hoverEnabled: true});
+        
+        
         this.callActions();
     }
 
@@ -26,6 +28,7 @@ import Indices from '../portfolio/cards/Indices'
         this.props.dispatch(getRecommendations());
         this.props.dispatch(getPortfolioStocksData());
     }
+    
     render() {
        
         const {profile,filteredrecommendationList,portfolioStockList,nseStocks} =this.props
@@ -51,10 +54,6 @@ import Indices from '../portfolio/cards/Indices'
                 </div>
             </div>
             </div>
-            
-            
-           
-            
             <div className="fixed-action-btn">
                 <a className="btn-floating btn-large red">
                     <i className="large material-icons">mode_edit</i>
@@ -75,7 +74,8 @@ const mapStateToProps = (state) =>
         profile: state.firebase.profile,
         filteredrecommendationList : state.recommendation.filteredRecommendations,
         portfolioStockList: state.portfolio.filteredPortfolioStocks,
-        nseStocks: state.nseData.data
+        nseStocks: state.nseData.data,
+        addedNewRecommendation : state.recommendation.addedNewRecommendation
     }
 }
 export default connect(mapStateToProps, null)(PortfolioSummary);

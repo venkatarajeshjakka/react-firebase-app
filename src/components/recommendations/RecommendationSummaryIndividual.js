@@ -27,9 +27,7 @@ class RecommendationSummaryIndividual extends Component {
                         return(
                                 <li key={item.id} className="collection-item">
                                     <div className="row">
-                                        <div className="col">
-                                                StockName : {item.stockName}
-                                        </div>
+                                       
                                         <div className="col">
                                             Target Price : {item.targetprice}
                                          </div>
@@ -38,11 +36,12 @@ class RecommendationSummaryIndividual extends Component {
                                              Date : {moment(item.date,"YYYYMMDD").format('ll')}
                                             </div>
                                             <div className="col">
-                                            Broker Name : {item.broker}
-                                            </div>
-                                            <div className="col">
                                                 Potential : {targetPotential(stockData.price.regularMarketPrice,item.targetprice)}
                                              </div>
+                                            <div className="col center">
+                                            Broker Name : {item.broker}
+                                            </div>
+                                            
                                             
                                         </div>
                                     </li>

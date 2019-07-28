@@ -6,7 +6,7 @@ import M from "materialize-css/dist/js/materialize.min.js";
 import moment from "moment";
 import { connect } from 'react-redux'
 import { addRecommendations } from '../../store/actions/recommendationsAction'
-
+import underscore from 'underscore'
  class AddRecommendations extends Component {
   state = 
   { 
@@ -15,7 +15,8 @@ import { addRecommendations } from '../../store/actions/recommendationsAction'
   formatMoment: "ddd D, MMM",
   targetprice: '',
   recommendation: '',
-  broker: ''
+  broker: '',
+  showwarning : false
    };
   componentDidMount() {
     var context = this;
@@ -44,20 +45,45 @@ import { addRecommendations } from '../../store/actions/recommendationsAction'
          this.setState({
              [e.target.id]: e.target.value
          })
+         this.setState({
+          showwarning:false
+         })
      }
- 
+    
      handleSubmit =(e) =>
      {
          e.preventDefault();
          console.log(this.state);
-         this.props.addRecommendations(this.state)
-         this.props.history.push('/portfolio');
+         const {filteredrecommendationList} = this.props;
+         
+         var duplicateRecord = underscore.findWhere(filteredrecommendationList, {stockName: this.state.value, 
+          targetprice: this.state.targetprice,
+          broker: this.state.broker,
+          recommendation : this.state.recommendation});
+    
+          if(duplicateRecord)
+          {
+            this.setState({showwarning:true})
+          }
+          else
+          {
+            this.props.addRecommendations(this.state)
+            this.props.history.push('/portfolio');
+          } 
      }
     render() {
       
         return (
           <div className="container">
             <h5 className="center-align">Add Recommendation</h5>
+            <div style={this.state.showwarning ? {} : { display: 'none' }}>
+              <div className="card yellow darken-2 center">
+                <div className="card-content white-text darken-3">
+                  <span><i class="material-icons">warning</i></span><span> Oh! Recommendation is already added</span>
+                </div>
+              </div>
+            </div>
+
             <div className="row">
             <form onSubmit={this.handleSubmit} className="white">
           <div className="input-field">
@@ -135,7 +161,8 @@ const mapStateToProps = (state) =>
 {
     return{
         
-        authState: state.firebase.auth
+        authState: state.firebase.auth,
+        filteredrecommendationList : state.recommendation.filteredRecommendations,
     }
 }
 const mapDispatchToProps = (dispatch) =>
