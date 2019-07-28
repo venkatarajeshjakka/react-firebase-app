@@ -18,8 +18,7 @@ import Indices from '../portfolio/cards/Indices'
     { 
         var elems = document.querySelectorAll('.fixed-action-btn');
         M.FloatingActionButton.init(elems, {direction:'top' ,hoverEnabled: true});
-        
-        
+  
         this.callActions();
     }
 
